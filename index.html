@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dalisson Silva — Data Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #22222e;
+    --accent: #00e5ff;
+    --accent2: #7c3aed;
+    --accent3: #f59e0b;
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Syne', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    overflow-x: hidden;
+  }
+
+  /* GRID BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-glow2 {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,58,237,0.08) 0%, transparent 70%);
+    bottom: 0;
+    left: 200px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    max-width: 900px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid rgba(0,229,255,0.3);
+    border-radius: 2px;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .hero h1 span {
+    display: block;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+  }
+
+  .hero-location {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover {
+    background: #33eaff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,229,255,0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  .about-text p strong {
+    color: var(--text);
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+  }
+
+  .stat-card:hover { border-color: rgba(0,229,255,0.3); }
+
+  .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: var(--mono);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* STACK */
+  .stack-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+
+  .stack-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: all 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stack-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,229,255,0.03), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .stack-card:hover {
+    border-color: rgba(0,229,255,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .stack-card:hover::after { opacity: 1; }
+
+  .stack-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .stack-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .stack-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* PIPELINE VISUAL */
+  .pipeline {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    margin-bottom: 3rem;
+    overflow-x: auto;
+  }
+
+  .pipeline-title {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .pipeline-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-width: 600px;
+  }
+
+  .pipeline-step {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+  }
+
+  .pipeline-step-inner {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem 0.75rem;
+    position: relative;
+  }
+
+  .pipeline-step:nth-child(1) .pipeline-step-inner { border-color: #f59e0b44; }
+  .pipeline-step:nth-child(3) .pipeline-step-inner { border-color: rgba(0,229,255,0.3); }
+  .pipeline-step:nth-child(5) .pipeline-step-inner { border-color: rgba(124,58,237,0.4); }
+  .pipeline-step:nth-child(7) .pipeline-step-inner { border-color: #10b98144; }
+
+  .pipeline-step-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+
+  .pipeline-step-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .pipeline-step:nth-child(1) .pipeline-step-name { color: #f59e0b; }
+  .pipeline-step:nth-child(3) .pipeline-step-name { color: var(--accent); }
+  .pipeline-step:nth-child(5) .pipeline-step-name { color: #a78bfa; }
+  .pipeline-step:nth-child(7) .pipeline-step-name { color: #10b981; }
+
+  .pipeline-arrow {
+    color: var(--border);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    padding: 0 0.25rem;
+  }
+
+  /* EXPERIENCE */
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .exp-card:hover {
+    border-color: rgba(0,229,255,0.2);
+    transform: translateX(4px);
+  }
+
+  .exp-card:hover::before { opacity: 1; }
+
+  .exp-role {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 0.2rem;
+  }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--accent);
+    border: 1px solid rgba(0,229,255,0.2);
+    padding: 0.25rem 0.6rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    transition: all 0.2s;
+  }
+
+  .contact-card:hover {
+    border-color: rgba(0,229,255,0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  }
+
+  .contact-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  .contact-value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .footer-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #10b981;
+  }
+
+  .footer-status::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* DIVIDER */
+  .full-divider {
+    position: relative;
+    z-index: 1;
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 3rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem; }
+    .full-divider { margin: 0 1.5rem; }
+    .exp-card { grid-template-columns: 1fr; }
+    .exp-period { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">// dalisson.silva</span>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Disponível para novos projetos</div>
+    <h1>
+      Dalisson<br>
+      <span>Silva</span>
+    </h1>
+    <p class="hero-subtitle">
+      Profissional Full-Cycle de Dados — do pipeline à governança, da arquitetura ao analytics. Transformo dados brutos em decisões estratégicas.
+    </p>
+    <div class="hero-location">
+      <span>📍</span> Maceió, Alagoas — Brasil
+    </div>
+    <div class="hero-ctas">
+      <a href="#experiencia" class="btn-primary">↓ Ver experiência</a>
+      <a href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" class="btn-secondary">LinkedIn →</a>
+    </div>
+  </div>
+</div>
+
+<hr class="full-divider">
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="section-label">01 — Sobre</div>
+  <h2 class="section-title">Full-Cycle<br>Data Professional</h2>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>Atuo em <strong>todo o ciclo de vida dos dados</strong> — desde a ingestão e modelagem até a entrega de insights acionáveis para o negócio.</p>
+      <p>Minha abordagem combina <strong>engenharia robusta</strong>, arquitetura escalável e governança sólida, garantindo que os dados cheguem com qualidade, segurança e confiabilidade.</p>
+      <p>Trabalho com o ecossistema <strong>Qlik</strong>, pipelines ETL em Python, bancos Oracle e infraestrutura em nuvem — criando soluções end-to-end que conectam a fonte de dados à tomada de decisão.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-number">360°</div>
+        <div class="stat-label">Visão do dado</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">ETL</div>
+        <div class="stat-label">Pipelines robustos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">OCI</div>
+        <div class="stat-label">Cloud Oracle</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">BI</div>
+        <div class="stat-label">Analytics & Qlik</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- STACK -->
+<section id="stack">
+  <div class="section-label">02 — Stack</div>
+  <h2 class="section-title">Tecnologias &<br>Ferramentas</h2>
+
+  <div class="pipeline fade-in">
+    <div class="pipeline-title">// fluxo de dados típico</div>
+    <div class="pipeline-flow">
+      <div class="pipeline-step">
+        <div class="pipeline-step-inner">
+          <div class="pipeline-step-label">ingestão</div>
+          <div class="pipeline-step-name">BRONZE</div>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-inner">
+          <div class="pipeline-step-label">tratamento</div>
+          <div class="pipeline-step-name">SILVER</div>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-inner">
+          <div class="pipeline-step-label">modelagem</div>
+          <div class="pipeline-step-name">GOLD</div>
+        </div>
+      </div>
+      <div class="pipeline-arrow">→</div>
+      <div class="pipeline-step">
+        <div class="pipeline-step-inner">
+          <div class="pipeline-step-label">entrega</div>
+          <div class="pipeline-step-name">ANALYTICS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack-grid fade-in">
+    <div class="stack-card">
+      <span class="stack-icon">🐍</span>
+      <div class="stack-name">Python</div>
+      <div class="stack-desc">ETL / Pipelines / Automação</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">🗄️</span>
+      <div class="stack-name">Oracle SQL</div>
+      <div class="stack-desc">Modelagem / Queries / PL/SQL</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">📊</span>
+      <div class="stack-name">Qlik Sense</div>
+      <div class="stack-desc">BI / Analytics / Dashboards</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">☁️</span>
+      <div class="stack-name">Oracle Cloud</div>
+      <div class="stack-desc">OCI / Autonomous DB / VM</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">🔄</span>
+      <div class="stack-name">ETL / Pipelines</div>
+      <div class="stack-desc">Ingestão / Transformação / Carga</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">🏛️</span>
+      <div class="stack-name">Arquitetura</div>
+      <div class="stack-desc">Medallion / Data Lake / DW</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">🔒</span>
+      <div class="stack-name">Governança</div>
+      <div class="stack-desc">Qualidade / Segurança / Catálogo</div>
+    </div>
+    <div class="stack-card">
+      <span class="stack-icon">🐧</span>
+      <div class="stack-name">Linux / Ubuntu</div>
+      <div class="stack-desc">Servidores / Shell / Cron</div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <div class="section-label">03 — Experiência</div>
+  <h2 class="section-title">Trajetória<br>Profissional</h2>
+  <div class="exp-list fade-in">
+
+    <div class="exp-card">
+      <div>
+        <div class="exp-role">Profissional Full-Cycle de Dados</div>
+        <div class="exp-company">// Engenharia · Arquitetura · Governança · Analytics</div>
+        <div class="exp-desc">
+          Responsável por todo o ciclo de vida dos dados — desde a definição da arquitetura e modelagem até a entrega de dashboards e relatórios analíticos. Construção de pipelines ETL robustos, implementação de camadas Bronze/Silver/Gold e garantia da qualidade e governança dos dados.
+        </div>
+        <div class="exp-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Oracle SQL</span>
+          <span class="tag">Qlik</span>
+          <span class="tag">ETL</span>
+          <span class="tag">Data Lake</span>
+          <span class="tag">OCI</span>
+          <span class="tag">Governança</span>
+        </div>
+      </div>
+      <div class="exp-period">Full-Cycle</div>
+    </div>
+
+    <div class="exp-card">
+      <div>
+        <div class="exp-role">Engenharia de Dados</div>
+        <div class="exp-company">// Pipelines · Ingestão · Transformação</div>
+        <div class="exp-desc">
+          Desenvolvimento e manutenção de pipelines de dados em Python. Integração de múltiplas fontes de dados, tratamento e padronização para alimentar camadas analíticas. Automação de processos e agendamento via Cron em ambiente Linux.
+        </div>
+        <div class="exp-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQL</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Cron</span>
+          <span class="tag">Automação</span>
+        </div>
+      </div>
+      <div class="exp-period">Engenharia</div>
+    </div>
+
+    <div class="exp-card">
+      <div>
+        <div class="exp-role">Analytics & Business Intelligence</div>
+        <div class="exp-company">// Qlik Sense · Dashboards · Insights</div>
+        <div class="exp-desc">
+          Desenvolvimento de soluções de BI utilizando o ecossistema Qlik. Criação de dashboards interativos, modelos de dados associativos e relatórios para suporte à tomada de decisão estratégica.
+        </div>
+        <div class="exp-tags">
+          <span class="tag">Qlik Sense</span>
+          <span class="tag">QlikView</span>
+          <span class="tag">Data Modeling</span>
+          <span class="tag">KPIs</span>
+          <span class="tag">Analytics</span>
+        </div>
+      </div>
+      <div class="exp-period">Analytics</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-label">04 — Contato</div>
+  <h2 class="section-title">Vamos<br>Conversar?</h2>
+  <div class="contact-grid fade-in">
+    <a href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" class="contact-card">
+      <div class="contact-icon">💼</div>
+      <div>
+        <div class="contact-label">LinkedIn</div>
+        <div class="contact-value">Dalisson Silva</div>
+      </div>
+    </a>
+    <a href="https://github.com/DalissonSilva" target="_blank" class="contact-card">
+      <div class="contact-icon">🐙</div>
+      <div>
+        <div class="contact-label">GitHub</div>
+        <div class="contact-value">DalissonSilva</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Dalisson Silva — Maceió, AL</p>
+  <div class="footer-status">Disponível para projetos</div>
+</footer>
+
+<script>
+  // Scroll fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
