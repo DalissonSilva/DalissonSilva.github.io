@@ -11,7 +11,7 @@
   <meta property="og:url" content="https://DalissonSilva.github.io" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
@@ -53,126 +53,71 @@
 
     <!-- ===================== HERO ===================== -->
     <section id="hero" class="hero-section">
-      <div class="hero-content">
-        <div class="hero-eyebrow animate-fade-up">
-          <span class="badge badge-blue">Full Cycle Data Engineer</span>
-          <span class="badge badge-amber">Dados e Analytics</span>
-        </div>
-        <h1 class="hero-title animate-fade-up delay-1">
-          Engenharia de Dados<br />
-          <span class="gradient-text">Do Dado Bruto à Decisão</span>
-        </h1>
-        <p class="hero-subtitle animate-fade-up delay-2">
-          Arquitetura · Governança · Analytics · Full Cycle
-        </p>
-
-        <!-- PIPELINE SVG ANIMADO -->
-        <div class="pipeline-wrapper animate-fade-up delay-3" aria-label="Diagrama do pipeline de dados: BD Transacional → Bronze → Silver → Gold → BI Analytics">
-          <svg class="pipeline-svg" viewBox="0 0 860 110" xmlns="http://www.w3.org/2000/svg" role="img">
-            <defs>
-              <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                <polygon points="0 0, 8 3, 0 6" fill="var(--accent-primary)" />
-              </marker>
-              <filter id="glow">
-                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-              </filter>
-            </defs>
-
-            <!-- BD Transacional -->
-            <g class="pipe-node" transform="translate(10,20)">
-              <rect width="130" height="70" rx="8" class="node-oracle" />
-              <text x="65" y="28" class="node-label-sm" text-anchor="middle">FONTE</text>
-              <text x="65" y="48" class="node-label" text-anchor="middle">BD Transacional</text>
-              <text x="65" y="63" class="node-sublabel" text-anchor="middle">Extração controlada</text>
-            </g>
-
-            <!-- Arrow 1 -->
-            <line x1="140" y1="55" x2="172" y2="55" class="pipe-arrow" marker-end="url(#arrowhead)">
-              <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.2s" repeatCount="indefinite"/>
-            </line>
-            <circle class="flow-dot" cx="155" cy="55" r="4">
-              <animateMotion path="M0,0 L30,0" dur="1.2s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- Bronze -->
-            <g class="pipe-node" transform="translate(175,20)">
-              <rect width="130" height="70" rx="8" class="node-bronze" />
-              <text x="65" y="28" class="node-label-sm" text-anchor="middle">CAMADA</text>
-              <text x="65" y="48" class="node-label" text-anchor="middle">🟫 Bronze</text>
-              <text x="65" y="63" class="node-sublabel" text-anchor="middle">schema: bronze.*</text>
-            </g>
-
-            <!-- Arrow 2 -->
-            <line x1="305" y1="55" x2="337" y2="55" class="pipe-arrow" marker-end="url(#arrowhead)">
-              <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
-            </line>
-            <circle class="flow-dot" cx="320" cy="55" r="4">
-              <animateMotion path="M0,0 L30,0" dur="1.2s" begin="0.4s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- Silver -->
-            <g class="pipe-node" transform="translate(340,20)">
-              <rect width="130" height="70" rx="8" class="node-silver" />
-              <text x="65" y="28" class="node-label-sm" text-anchor="middle">CAMADA</text>
-              <text x="65" y="48" class="node-label" text-anchor="middle">⬜ Silver</text>
-              <text x="65" y="63" class="node-sublabel" text-anchor="middle">schema: silver.*</text>
-            </g>
-
-            <!-- Arrow 3 -->
-            <line x1="470" y1="55" x2="502" y2="55" class="pipe-arrow" marker-end="url(#arrowhead)">
-              <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
-            </line>
-            <circle class="flow-dot" cx="485" cy="55" r="4">
-              <animateMotion path="M0,0 L30,0" dur="1.2s" begin="0.8s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- Gold -->
-            <g class="pipe-node" transform="translate(505,20)">
-              <rect width="130" height="70" rx="8" class="node-gold" />
-              <text x="65" y="28" class="node-label-sm" text-anchor="middle">CAMADA</text>
-              <text x="65" y="48" class="node-label" text-anchor="middle">🟡 Gold</text>
-              <text x="65" y="63" class="node-sublabel" text-anchor="middle">schema: gold.*</text>
-            </g>
-
-            <!-- Arrow 4 -->
-            <line x1="635" y1="55" x2="667" y2="55" class="pipe-arrow" marker-end="url(#arrowhead)">
-              <animate attributeName="stroke-dashoffset" from="30" to="0" dur="1.2s" begin="1.2s" repeatCount="indefinite"/>
-            </line>
-            <circle class="flow-dot" cx="650" cy="55" r="4">
-              <animateMotion path="M0,0 L30,0" dur="1.2s" begin="1.2s" repeatCount="indefinite"/>
-            </circle>
-
-            <!-- Qlik BI -->
-            <g class="pipe-node" transform="translate(670,20)">
-              <rect width="140" height="70" rx="8" class="node-bi" filter="url(#glow)" />
-              <text x="70" y="28" class="node-label-sm" text-anchor="middle">CONSUMO</text>
-              <text x="70" y="48" class="node-label" text-anchor="middle">📊 BI Analytics</text>
-              <text x="70" y="63" class="node-sublabel" text-anchor="middle">Painéis por área</text>
-            </g>
-          </svg>
-          <p class="pipeline-caption">Pipeline em produção — Airflow orquestra cada camada com SLA e alertas</p>
+      <div class="hero-grid">
+        <!-- Left: content -->
+        <div class="hero-left">
+          <div class="hero-eyebrow animate-fade-up">
+            <span class="badge badge-blue">Full Cycle Data Engineer</span>
+            <span class="badge badge-amber">Dados e Analytics</span>
+          </div>
+          <h1 class="hero-title animate-fade-up delay-1">
+            Engenharia<br />de Dados
+          </h1>
+          <p class="hero-subtitle animate-fade-up delay-2">
+            Da extração bruta à decisão estratégica — arquitetura medallion, governança ativa e analytics end-to-end em ambiente corporativo de saúde.
+          </p>
+          <div class="hero-ctas animate-fade-up delay-3">
+            <a href="#arquitetura" class="btn btn-primary">Ver Arquitetura</a>
+            <a href="#contato" class="btn btn-secondary">Contato</a>
+          </div>
+          <div class="hero-tech animate-fade-up delay-4">
+            <span class="hero-tech-item">Python</span>
+            <span class="hero-tech-item">Airflow</span>
+            <span class="hero-tech-item">PostgreSQL</span>
+            <span class="hero-tech-item">Parquet</span>
+            <span class="hero-tech-item">BI Analytics</span>
+            <span class="hero-tech-item future">OCI ↗</span>
+          </div>
         </div>
 
-        <!-- Stack Badges -->
-        <div class="stack-badges animate-fade-up delay-4">
-          <span class="tech-badge">Python</span>
-          <span class="tech-badge">Airflow</span>
-          <span class="tech-badge">PostgreSQL</span>
-          <span class="tech-badge">Parquet</span>
-          <span class="tech-badge">BI Analytics</span>
-          <span class="tech-badge future">OCI ↗</span>
-        </div>
-
-        <!-- CTAs -->
-        <div class="hero-ctas animate-fade-up delay-5">
-          <a href="#arquitetura" class="btn btn-primary">Ver Arquitetura</a>
-          <a href="#contato" class="btn btn-secondary">Contato</a>
+        <!-- Right: vertical pipeline -->
+        <div class="hero-right animate-fade-up delay-2" aria-hidden="true">
+          <div class="flow-pipeline">
+            <div class="fp-node fp-source">
+              <div class="fp-tag">FONTE</div>
+              <div class="fp-name">BD Transacional</div>
+              <div class="fp-sub">Extração controlada</div>
+            </div>
+            <div class="fp-arrow"><div class="fp-line"></div></div>
+            <div class="fp-node fp-bronze">
+              <div class="fp-tag">BRONZE</div>
+              <div class="fp-name">bronze.*</div>
+              <div class="fp-sub">Cópia fiel · DT_CARGA</div>
+            </div>
+            <div class="fp-arrow"><div class="fp-line"></div></div>
+            <div class="fp-node fp-silver">
+              <div class="fp-tag">SILVER</div>
+              <div class="fp-name">silver.*</div>
+              <div class="fp-sub">Modelagem · Data Owners</div>
+            </div>
+            <div class="fp-arrow"><div class="fp-line"></div></div>
+            <div class="fp-node fp-gold">
+              <div class="fp-tag">GOLD</div>
+              <div class="fp-name">gold.*</div>
+              <div class="fp-sub">1 Parquet · Zero join</div>
+            </div>
+            <div class="fp-arrow"><div class="fp-line"></div></div>
+            <div class="fp-node fp-bi">
+              <div class="fp-tag">ANALYTICS</div>
+              <div class="fp-name">BI Corporativo</div>
+              <div class="fp-sub">Decisões estratégicas</div>
+            </div>
+          </div>
+          <p class="fp-caption">Pipeline em produção · Airflow orquestra com SLA</p>
         </div>
       </div>
 
       <div class="hero-bg-grid" aria-hidden="true"></div>
-      <div class="hero-glow" aria-hidden="true"></div>
     </section>
 
     <!-- ===================== SOBRE ===================== -->
