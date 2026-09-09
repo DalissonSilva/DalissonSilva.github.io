@@ -11,844 +11,508 @@
   <meta property="og:url" content="https://DalissonSilva.github.io" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./assets/css/style.css" />
 </head>
 <body>
 
-  <!-- PROGRESS BAR -->
-  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <!-- SPINE — lombada fixa: índice + progresso + tema -->
+  <nav class="spine" id="spine" aria-label="Navegação principal">
+    <div class="spine-progress" id="spineProgress" aria-hidden="true"></div>
+    <button class="spine-hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="#hero" class="spine-logo" aria-label="Início">{<span class="b">dados</span>}</a>
 
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#hero" class="nav-logo" aria-label="Início">
-        <span class="logo-bracket">{</span>
-        <span class="logo-text">dados</span>
-        <span class="logo-bracket">}</span>
-      </a>
-      <nav class="nav-links" id="navLinks" aria-label="Navegação principal">
-        <a href="#sobre" class="nav-link">Sobre</a>
-        <a href="#arquitetura" class="nav-link">Arquitetura</a>
-        <a href="#pilares" class="nav-link">Pilares</a>
-        <a href="#stack" class="nav-link">Stack</a>
-        <a href="#governanca" class="nav-link">Governança</a>
-        <a href="#case" class="nav-link">Case</a>
-        <a href="#roadmap" class="nav-link">Roadmap</a>
-        <a href="#contato" class="nav-link nav-cta">Contato</a>
-      </nav>
-      <div class="nav-actions">
-        <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro">
-          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <button class="hamburger" id="hamburger" aria-label="Abrir menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+    <div class="spine-marks" id="spineMarks">
+      <a href="#sobre" class="spine-mark" data-target="sobre"><span class="spine-mark-dot"></span><span class="spine-mark-label">01</span><span class="spine-mark-flyout">Sobre</span></a>
+      <a href="#arquitetura" class="spine-mark" data-target="arquitetura"><span class="spine-mark-dot"></span><span class="spine-mark-label">02</span><span class="spine-mark-flyout">Arquitetura</span></a>
+      <a href="#pilares" class="spine-mark" data-target="pilares"><span class="spine-mark-dot"></span><span class="spine-mark-label">03</span><span class="spine-mark-flyout">Pilares</span></a>
+      <a href="#stack" class="spine-mark" data-target="stack"><span class="spine-mark-dot"></span><span class="spine-mark-label">04</span><span class="spine-mark-flyout">Stack</span></a>
+      <a href="#governanca" class="spine-mark" data-target="governanca"><span class="spine-mark-dot"></span><span class="spine-mark-label">05</span><span class="spine-mark-flyout">Governança</span></a>
+      <a href="#projetos" class="spine-mark" data-target="projetos"><span class="spine-mark-dot"></span><span class="spine-mark-label">06</span><span class="spine-mark-flyout">Projetos</span></a>
+      <a href="#roadmap" class="spine-mark" data-target="roadmap"><span class="spine-mark-dot"></span><span class="spine-mark-label">07</span><span class="spine-mark-flyout">Roadmap</span></a>
+      <a href="#contato" class="spine-mark" data-target="contato"><span class="spine-mark-dot"></span><span class="spine-mark-label">08</span><span class="spine-mark-flyout">Contato</span></a>
     </div>
-  </header>
 
-  <main>
+    <div class="spine-future" aria-hidden="true">
+      <span class="spine-future-tick"></span><span class="spine-future-label">+3M</span>
+      <span class="spine-future-tick"></span><span class="spine-future-label">+6M</span>
+      <span class="spine-future-tick"></span><span class="spine-future-label">+12M</span>
+    </div>
 
-    <!-- ===================== HERO ===================== -->
-    <section id="hero" class="hero-section">
-      <div class="hero-grid">
-        <!-- Left: content -->
-        <div class="hero-left">
-          <div class="hero-eyebrow animate-fade-up">
-            <span class="badge badge-blue">Full Cycle Data Engineer</span>
-            <span class="badge badge-amber">Dados e Analytics</span>
-          </div>
-          <h1 class="hero-title animate-fade-up delay-1">
-            Engenharia<br />de Dados
-          </h1>
-          <p class="hero-subtitle animate-fade-up delay-2">
-            Da extração bruta à decisão estratégica — arquitetura medallion, governança ativa e analytics end-to-end em ambiente corporativo de saúde.
-          </p>
-          <div class="hero-ctas animate-fade-up delay-3">
-            <a href="#arquitetura" class="btn btn-primary">Ver Arquitetura</a>
-            <a href="#contato" class="btn btn-secondary">Contato</a>
-          </div>
-          <div class="hero-tech animate-fade-up delay-4">
-            <span class="hero-tech-item">Python</span>
-            <span class="hero-tech-item">Airflow</span>
-            <span class="hero-tech-item">PostgreSQL</span>
-            <span class="hero-tech-item">Parquet</span>
-            <span class="hero-tech-item">BI Analytics</span>
-            <span class="hero-tech-item future">OCI ↗</span>
-          </div>
-        </div>
+    <button class="spine-theme-toggle" id="themeToggle" aria-label="Alternar tema claro/escuro">
+      <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </nav>
 
-        <!-- Right: vertical pipeline -->
-        <div class="hero-right animate-fade-up delay-2" aria-hidden="true">
-          <div class="flow-pipeline">
-            <div class="fp-node fp-source">
-              <div class="fp-tag">FONTE</div>
-              <div class="fp-name">BD Transacional</div>
-              <div class="fp-sub">Extração controlada</div>
-            </div>
-            <div class="fp-arrow"><div class="fp-line"></div></div>
-            <div class="fp-node fp-bronze">
-              <div class="fp-tag">BRONZE</div>
-              <div class="fp-name">bronze.*</div>
-              <div class="fp-sub">Cópia fiel · DT_CARGA</div>
-            </div>
-            <div class="fp-arrow"><div class="fp-line"></div></div>
-            <div class="fp-node fp-silver">
-              <div class="fp-tag">SILVER</div>
-              <div class="fp-name">silver.*</div>
-              <div class="fp-sub">Modelagem · Data Owners</div>
-            </div>
-            <div class="fp-arrow"><div class="fp-line"></div></div>
-            <div class="fp-node fp-gold">
-              <div class="fp-tag">GOLD</div>
-              <div class="fp-name">gold.*</div>
-              <div class="fp-sub">1 Parquet · Zero join</div>
-            </div>
-            <div class="fp-arrow"><div class="fp-line"></div></div>
-            <div class="fp-node fp-bi">
-              <div class="fp-tag">ANALYTICS</div>
-              <div class="fp-name">BI Corporativo</div>
-              <div class="fp-sub">Decisões estratégicas</div>
-            </div>
-          </div>
-          <p class="fp-caption">Pipeline em produção · Airflow orquestra com SLA</p>
-        </div>
+  <!-- MOBILE NAV OVERLAY -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#sobre">01 · Sobre</a>
+    <a href="#arquitetura">02 · Arquitetura</a>
+    <a href="#pilares">03 · Pilares</a>
+    <a href="#stack">04 · Stack</a>
+    <a href="#governanca">05 · Governança</a>
+    <a href="#projetos">06 · Projetos</a>
+    <a href="#roadmap">07 · Roadmap</a>
+    <a href="#contato">08 · Contato</a>
+  </div>
+
+  <main class="dossier">
+
+    <!-- ===================== CAPA ===================== -->
+    <section id="hero" class="cover">
+      <div class="cover-frame"><span class="stamped">FIG. 01</span><span>— fluxo de dados em produção, ambiente corporativo de saúde</span></div>
+
+      <div class="cover-diagram-wrap">
+        <svg class="cover-schematic-svg" viewBox="0 0 900 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fluxo: Fonte para Bronze, Silver, Gold e BI">
+          <defs>
+            <marker id="arrowHero" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--blueprint)" />
+            </marker>
+          </defs>
+          <path class="sch-line" d="M 90,70 L 810,70" marker-end="url(#arrowHero)" />
+          <rect class="sch-node-box" x="15" y="46" width="150" height="48" />
+          <text class="sch-label-strong" x="90" y="66" text-anchor="middle">FONTE</text>
+          <text class="sch-label" x="90" y="80" text-anchor="middle">BD Transacional</text>
+          <rect class="sch-node-box n-bronze" x="195" y="46" width="150" height="48" />
+          <text class="sch-label-strong" x="270" y="64" text-anchor="middle">BRONZE</text>
+          <text class="sch-tag" x="270" y="78" text-anchor="middle">bronze.*</text>
+          <text class="sch-label" x="270" y="89" text-anchor="middle">Cópia fiel · DT_CARGA</text>
+          <rect class="sch-node-box n-silver" x="375" y="46" width="150" height="48" />
+          <text class="sch-label-strong" x="450" y="64" text-anchor="middle">SILVER</text>
+          <text class="sch-tag" x="450" y="78" text-anchor="middle">silver.*</text>
+          <text class="sch-label" x="450" y="89" text-anchor="middle">Modelagem · Data Owners</text>
+          <rect class="sch-node-box n-gold" x="555" y="46" width="150" height="48" />
+          <text class="sch-label-strong" x="630" y="64" text-anchor="middle">GOLD</text>
+          <text class="sch-tag" x="630" y="78" text-anchor="middle">gold.*</text>
+          <text class="sch-label" x="630" y="89" text-anchor="middle">1 Parquet · Zero join</text>
+          <rect class="sch-node-box n-bi" x="735" y="46" width="150" height="48" />
+          <text class="sch-label-strong" x="810" y="66" text-anchor="middle">ANALYTICS</text>
+          <text class="sch-label" x="810" y="80" text-anchor="middle">BI Corporativo</text>
+        </svg>
       </div>
 
-      <div class="hero-bg-grid" aria-hidden="true"></div>
+      <div class="titleblock">
+        <div class="tb-row"><span class="tb-label">Nome</span><span class="tb-value">Dálisson Silva</span></div>
+        <div class="tb-row"><span class="tb-label">Função</span><span class="tb-value tb-muted">Full Cycle Data Engineer</span></div>
+        <div class="tb-row"><span class="tb-label">Status</span><span class="tb-value tb-muted">Data Lake local em produção</span></div>
+        <div class="tb-row">
+          <span class="tb-label">Maturidade</span>
+          <span class="tb-gauge">
+            <svg class="gauge-svg" viewBox="0 0 120 75" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path class="gauge-arc gauge-arc-bronze" d="M 15,60 A 45,45 0 0,1 37.5,21.03" fill="none" stroke-width="8" stroke-linecap="butt" />
+              <path class="gauge-arc gauge-arc-silver" d="M 37.5,21.03 A 45,45 0 0,1 82.5,21.03" fill="none" stroke-width="8" stroke-linecap="butt" />
+              <path class="gauge-arc gauge-arc-gold" d="M 82.5,21.03 A 45,45 0 0,1 105,60" fill="none" stroke-width="8" stroke-linecap="butt" />
+              <g class="gauge-needle">
+                <line x1="60" y1="60" x2="60" y2="17" stroke="var(--gold)" stroke-width="3" stroke-linecap="square" />
+              </g>
+              <circle cx="60" cy="60" r="4" fill="var(--gold)" stroke="var(--ink)" stroke-width="1.5" />
+            </svg>
+            <span class="tb-value tb-muted" style="font-size:0.72rem">rumo a cloud nativo</span>
+          </span>
+        </div>
+        <div class="tb-actions">
+          <a href="#arquitetura" class="cover-cta primary">Ver arquitetura →</a>
+          <a href="#contato" class="cover-cta">Contato →</a>
+        </div>
+      </div>
     </section>
 
     <!-- ===================== SOBRE ===================== -->
-    <section id="sobre" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">01 — Sobre</span>
-          <h2 class="section-title">Perfil <span class="highlight">Full Cycle</span></h2>
-        </div>
+    <section id="sobre" class="entry reveal">
+      <span class="entry-tab">§ 01 · Sobre</span>
+      <h2 class="entry-title">Perfil <span class="highlight">Full Cycle</span></h2>
 
-        <div class="about-grid">
-          <div class="about-blocks">
-            <div class="about-block card animate-on-scroll">
-              <div class="about-block-icon">⟳</div>
-              <h3>Full Cycle</h3>
-              <p>Da extração do dado bruto no banco de dados transacional à entrega do painel para o C-Level — gerencio cada camada da arquitetura: ingestão, transformação, governança e consumo.</p>
-            </div>
-            <div class="about-block card animate-on-scroll">
-              <div class="about-block-icon">⚙</div>
-              <h3>O que eu construo</h3>
-              <p>Pipelines confiáveis que entregam dados corretos, no horário certo, com rastreabilidade total e alertas automáticos.</p>
-            </div>
-            <div class="about-block card animate-on-scroll">
-              <div class="about-block-icon">✗</div>
-              <h3>O que eu elimino</h3>
-              <ul class="eliminate-list">
-                <li>Processos paralelos sem controle</li>
-                <li>Dados sem dono definido</li>
-                <li>Painéis que ninguém sabe se estão atualizados</li>
-                <li>Conexões diretas ao banco de produção</li>
-              </ul>
-            </div>
-          </div>
+      <div class="sobre-flow">
+        <p>Da extração do dado bruto no banco de dados transacional à entrega do painel para o C-Level — gerencio cada camada da arquitetura: ingestão, transformação, governança e consumo. <strong>Full cycle</strong> significa que a responsabilidade não termina quando o dado chega no banco.</p>
+        <p>Construo pipelines confiáveis que entregam dados corretos, no horário certo, com rastreabilidade total e alertas automáticos. E elimino processos paralelos sem controle, dados sem dono definido, painéis que ninguém sabe se estão atualizados e conexões diretas ao banco de produção.</p>
+      </div>
 
-          <div class="metrics-grid">
-            <div class="metric-card animate-on-scroll" data-delay="0">
-              <div class="metric-number" data-count="150" data-suffix="+">0</div>
-              <div class="metric-label">Painéis de BI inventariados e governados</div>
-            </div>
-            <div class="metric-card animate-on-scroll" data-delay="100">
-              <div class="metric-number" data-count="50" data-suffix="%">0</div>
-              <div class="metric-label">Redução no tempo de recarga dos painéis</div>
-            </div>
-            <div class="metric-card animate-on-scroll" data-delay="200">
-              <div class="metric-number" data-count="3" data-suffix="">0</div>
-              <div class="metric-label">Camadas de dados: Bronze → Silver → Gold</div>
-            </div>
-            <div class="metric-card animate-on-scroll" data-delay="100">
-              <div class="metric-number" data-count="70" data-suffix="%">0</div>
-              <div class="metric-label">Conexões diretas ao BD de produção eliminadas</div>
-            </div>
-            
-          </div>
-        </div>
+      <div class="stat-strip">
+        <div class="stat"><span class="stat-number" data-count="150" data-suffix="+">0</span><span class="stat-label">Painéis de BI inventariados e governados</span></div>
+        <div class="stat"><span class="stat-number" data-count="50" data-suffix="%">0</span><span class="stat-label">Redução no tempo de recarga dos painéis</span></div>
+        <div class="stat"><span class="stat-number" data-count="3" data-suffix="">0</span><span class="stat-label">Camadas de dados: Bronze → Silver → Gold</span></div>
+        <div class="stat"><span class="stat-number" data-count="70" data-suffix="%">0</span><span class="stat-label">Conexões diretas ao BD de produção eliminadas</span></div>
       </div>
     </section>
 
     <!-- ===================== ARQUITETURA ===================== -->
-    <section id="arquitetura" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">02 — Arquitetura</span>
-          <h2 class="section-title">O que eu <span class="highlight">construí</span></h2>
-        </div>
+    <section id="arquitetura" class="entry entry-alt reveal">
+      <span class="entry-tab">§ 02 · Arquitetura</span>
+      <h2 class="entry-title">O que eu <span class="highlight">construí</span></h2>
+      <p class="entry-intro">Três eras — clique em cada uma pra expandir os detalhes.</p>
 
-        <!-- Timeline das 3 Eras -->
-        <div class="eras-title">
-          <h3>As Três Eras</h3>
-          <p class="text-secondary">Clique em cada era para ver os detalhes</p>
-        </div>
-        <div class="eras-timeline animate-on-scroll">
-          <div class="era-item" data-era="legacy">
-            <div class="era-marker era-past"></div>
-            <div class="era-card">
-              <span class="era-label era-label-past">Passado</span>
-              <h4>ETL Legado</h4>
-              <p class="era-tagline">3 fluxos paralelos sem governança</p>
-              <div class="era-details">
-                <ul>
-                  <li>BD transacional exposto diretamente aos painéis</li>
-                  <li>Sem versionamento ou documentação</li>
-                  <li>Recargas manuais e inconsistentes</li>
-                  <li>Sem Data Owner ou responsável</li>
-                  <li>700+ painéis sem critério de criação</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="era-connector"></div>
-          <div class="era-item active" data-era="current">
-            <div class="era-marker era-current"></div>
-            <div class="era-card era-active-card">
-              <span class="era-label era-label-current">Presente ✓</span>
-              <h4>Data Lake Local</h4>
-              <p class="era-tagline">Bronze / Silver / Gold em produção</p>
-              <div class="era-details">
-                <ul>
-                  <li>Apache Airflow com SLA e alertas</li>
-                  <li>PostgreSQL com schemas isolados</li>
-                  <li>Parquet Gold por painel de BI</li>
-                  <li>Git com branches por camada</li>
-                  <li>Data Owners formalizados por domínio</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="era-connector"></div>
-          <div class="era-item" data-era="future">
-            <div class="era-marker era-future"></div>
-            <div class="era-card">
-              <span class="era-label era-label-future">Futuro — 6m</span>
-              <h4>Cloud Nativo</h4>
-              <p class="era-tagline">OCI + Analytics Cloud + Object Storage</p>
-              <div class="era-details">
-                <ul>
-                  <li>OCI: Object Storage + ADW + Data Integration</li>
-                  <li>Oracle Analytics Cloud para BI em nuvem</li>
-                  <li>Data Catalog para governança unificada</li>
-                  <li>OCI Data Science para modelos de ML</li>
-                  <li>Streaming e dados em tempo real</li>
-                </ul>
-              </div>
-            </div>
+      <div class="ledger">
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">passado</span></div>
+          <div class="ledger-row-body">
+            <h4>ETL Legado <span class="ledger-row-badge rb-past">Descontinuado</span> <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>3 fluxos paralelos sem governança</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li>BD transacional exposto diretamente aos painéis</li>
+              <li>Sem versionamento ou documentação</li>
+              <li>Recargas manuais e inconsistentes</li>
+              <li>Sem Data Owner ou responsável</li>
+              <li>700+ painéis sem critério de criação</li>
+            </ul></div>
           </div>
         </div>
-
-        <!-- Diagrama das Camadas -->
-        <div class="layers-section animate-on-scroll">
-          <h3>Diagrama das Camadas</h3>
-
-          <div class="layers-diagram">
-            <div class="layer-box layer-source">
-              <div class="layer-header">
-                <span class="layer-icon">🗄️</span>
-                <span class="layer-name">FONTE: Banco de Dados Transacional</span>
-              </div>
-              <div class="layer-desc">Sistema transacional de origem · Acesso somente leitura via camada Bronze</div>
-            </div>
-
-            <div class="layer-arrow">
-              <div class="arrow-line"></div>
-              <div class="arrow-label">
-                <span class="code-text">Extração Python — somente Bronze lê a fonte</span>
-              </div>
-            </div>
-
-            <div class="layer-box layer-bronze">
-              <div class="layer-header">
-                <span class="layer-icon">🟫</span>
-                <span class="layer-name">BRONZE · <code>schema: bronze.*</code></span>
-                <button class="copy-btn" data-copy="bronze.BD_TABELA_PRINCIPAL" aria-label="Copiar exemplo de nomenclatura Bronze">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  Copiar exemplo
-                </button>
-              </div>
-              <div class="layer-details">
-                <span class="layer-tag">Cópia fiel da fonte</span>
-                <span class="layer-tag">DT_CARGA</span>
-                <span class="layer-tag">Sem transformação</span>
-              </div>
-              <code class="layer-example">bronze.BD_TABELA_PRINCIPAL · bronze.BD_TABELA_DETALHE</code>
-            </div>
-
-            <div class="layer-arrow">
-              <div class="arrow-line"></div>
-              <div class="arrow-label">
-                <span class="code-text">Python + regras de negócio centralizadas</span>
-              </div>
-            </div>
-
-            <div class="layer-box layer-silver">
-              <div class="layer-header">
-                <span class="layer-icon">⬜</span>
-                <span class="layer-name">SILVER / PRATA · <code>schema: silver.*</code></span>
-                <button class="copy-btn" data-copy="silver.FATO_TRANSACAO" aria-label="Copiar exemplo de nomenclatura Silver">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  Copiar exemplo
-                </button>
-              </div>
-              <div class="layer-details">
-                <span class="layer-tag">Modelo dimensional</span>
-                <span class="layer-tag">Data Owners</span>
-                <span class="layer-tag">Dicionário</span>
-                <span class="layer-tag">Changelog Git</span>
-              </div>
-              <code class="layer-example">silver.DIM_ENTIDADE · silver.FATO_PROCESSO · silver.FATO_TRANSACAO</code>
-            </div>
-
-            <div class="layer-arrow">
-              <div class="arrow-line"></div>
-              <div class="arrow-label">
-                <span class="code-text">Consolidação por área de negócio</span>
-              </div>
-            </div>
-
-            <div class="layer-box layer-gold">
-              <div class="layer-header">
-                <span class="layer-icon">🟡</span>
-                <span class="layer-name">GOLD · <code>schema: gold.*</code></span>
-                <button class="copy-btn" data-copy="gold.FIN_RESULTADO" aria-label="Copiar exemplo de nomenclatura Gold">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                  Copiar exemplo
-                </button>
-              </div>
-              <div class="layer-details">
-                <span class="layer-tag">1 Parquet por painel</span>
-                <span class="layer-tag">Zero join no BI</span>
-                <span class="layer-tag">Por área de negócio</span>
-              </div>
-              <code class="layer-example">gold.FIN_RESULTADO · gold.OPS_INDICADORES · gold.SUPR_CONSOLIDADO</code>
-            </div>
-
-            <div class="layer-arrow">
-              <div class="arrow-line"></div>
-              <div class="arrow-label">
-                <span class="code-text">Recarga via Airflow API · sincronismo garantido</span>
-              </div>
-            </div>
-
-            <div class="layer-box layer-bi">
-              <div class="layer-header">
-                <span class="layer-icon">📊</span>
-                <span class="layer-name">BI ANALYTICS · Consumo</span>
-              </div>
-              <div class="layer-details">
-                <span class="layer-tag">700+ painéis</span>
-                <span class="layer-tag">Espaços por área</span>
-                <span class="layer-tag">Autoatendimento analítico</span>
-              </div>
-              <code class="layer-example">FINANCEIRO_ESTRATEGICO · OPERACIONAL · SUPRIMENTOS_GERENCIAL</code>
-            </div>
+        <div class="ledger-row clickable open" data-toggle>
+          <div class="ledger-row-key"><span class="n">presente</span></div>
+          <div class="ledger-row-body">
+            <h4>Data Lake Local <span class="ledger-row-badge rb-current">Em produção</span> <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Bronze / Silver / Gold em produção</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li>Apache Airflow com SLA e alertas</li>
+              <li>PostgreSQL com schemas isolados</li>
+              <li>Parquet Gold por painel de BI</li>
+              <li>Git com branches por camada</li>
+              <li>Data Owners formalizados por domínio</li>
+            </ul></div>
           </div>
         </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">futuro · 6m</span></div>
+          <div class="ledger-row-body">
+            <h4>Cloud Nativo <span class="ledger-row-badge rb-future">Planejado</span> <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>OCI + Analytics Cloud + Object Storage</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li>OCI: Object Storage + ADW + Data Integration</li>
+              <li>Oracle Analytics Cloud para BI em nuvem</li>
+              <li>Data Catalog para governança unificada</li>
+              <li>OCI Data Science para modelos de ML</li>
+              <li>Streaming e dados em tempo real</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
 
-        <!-- SLA Airflow -->
-        <div class="sla-section animate-on-scroll">
-          <h3>Orquestração Airflow — SLA Diário</h3>
-          <p class="text-secondary">Janela de processamento noturno para dados disponíveis antes do expediente</p>
-          <div class="gantt">
-            <div class="g-row">
-              <div class="g-label">🟫 Bronze</div>
-              <div class="g-track">
-                <div class="g-bar g-bronze" style="left:8.33%;width:33.34%">01:00–05:00</div>
-              </div>
-            </div>
-            <div class="g-row">
-              <div class="g-label">⬜ Silver Fin.</div>
-              <div class="g-track">
-                <div class="g-bar g-silver" style="left:45.83%;width:12.5%">05:30–07:00</div>
-              </div>
-            </div>
-            <div class="g-row">
-              <div class="g-label">⬜ Silver Ass.</div>
-              <div class="g-track">
-                <div class="g-bar g-silver" style="left:45.83%;width:16.67%">05:30–07:30</div>
-              </div>
-            </div>
-            <div class="g-row">
-              <div class="g-label">🟡 Gold + Parquet</div>
-              <div class="g-track">
-                <div class="g-bar g-gold" style="left:62.5%;width:12.5%">07:30–09:00</div>
-              </div>
-            </div>
-            <div class="g-row">
-              <div class="g-label">📊 Recarga BI</div>
-              <div class="g-track">
-                <div class="g-bar g-qlik" style="left:79.17%;width:8.33%">09:30–10:30</div>
-              </div>
-            </div>
-            <div class="g-row g-axis-row">
-              <div class="g-label"></div>
-              <div class="g-axis">
-                <span style="left:0%;transform:none">00h</span>
-                <span style="left:25%">03h</span>
-                <span style="left:50%">06h</span>
-                <span style="left:75%">09h</span>
-                <span style="left:100%;transform:translateX(-100%)">12h</span>
-              </div>
-            </div>
+      <h3 style="margin:3rem 0 1rem">Nomenclatura por camada</h3>
+      <p class="entry-intro">Diagrama completo do fluxo na abertura da página (FIG. 01, topo ↑)</p>
+      <div class="schema-examples">
+        <div class="schema-ex-row">
+          <code>bronze.BD_TABELA_PRINCIPAL</code>
+          <div class="schema-ex-tags"><span class="schema-ex-tag">Cópia fiel</span><span class="schema-ex-tag">DT_CARGA</span></div>
+          <button class="copy-btn" data-copy="bronze.BD_TABELA_PRINCIPAL" aria-label="Copiar exemplo Bronze">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            copiar
+          </button>
+        </div>
+        <div class="schema-ex-row">
+          <code>silver.FATO_TRANSACAO</code>
+          <div class="schema-ex-tags"><span class="schema-ex-tag">Modelo dimensional</span><span class="schema-ex-tag">Changelog Git</span></div>
+          <button class="copy-btn" data-copy="silver.FATO_TRANSACAO" aria-label="Copiar exemplo Silver">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            copiar
+          </button>
+        </div>
+        <div class="schema-ex-row">
+          <code>gold.FIN_RESULTADO</code>
+          <div class="schema-ex-tags"><span class="schema-ex-tag">1 Parquet/painel</span><span class="schema-ex-tag">Zero join</span></div>
+          <button class="copy-btn" data-copy="gold.FIN_RESULTADO" aria-label="Copiar exemplo Gold">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="1"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            copiar
+          </button>
+        </div>
+      </div>
+
+      <h3 style="margin:3rem 0 0.5rem">Orquestração Airflow — SLA diário</h3>
+      <p class="entry-intro">Janela de processamento noturno para dados disponíveis antes do expediente</p>
+      <div class="gantt">
+        <div class="g-row">
+          <div class="g-label">Bronze</div>
+          <div class="g-track"><div class="g-bar g-bronze" style="left:8.33%;width:33.34%">01:00–05:00</div></div>
+        </div>
+        <div class="g-row">
+          <div class="g-label">Silver Fin.</div>
+          <div class="g-track"><div class="g-bar g-silver" style="left:45.83%;width:12.5%">05:30–07:00</div></div>
+        </div>
+        <div class="g-row">
+          <div class="g-label">Silver Ass.</div>
+          <div class="g-track"><div class="g-bar g-silver" style="left:45.83%;width:16.67%">05:30–07:30</div></div>
+        </div>
+        <div class="g-row">
+          <div class="g-label">Gold + Parquet</div>
+          <div class="g-track"><div class="g-bar g-gold" style="left:62.5%;width:12.5%">07:30–09:00</div></div>
+        </div>
+        <div class="g-row">
+          <div class="g-label">Recarga BI</div>
+          <div class="g-track"><div class="g-bar g-qlik" style="left:79.17%;width:8.33%">09:30–10:30</div></div>
+        </div>
+        <div class="g-row g-axis-row">
+          <div class="g-label"></div>
+          <div class="g-axis">
+            <span style="left:0%;transform:none">00h</span>
+            <span style="left:25%">03h</span>
+            <span style="left:50%">06h</span>
+            <span style="left:75%">09h</span>
+            <span style="left:100%;transform:translateX(-100%)">12h</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== PILARES ===================== -->
-    <section id="pilares" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">03 — Pilares</span>
-          <h2 class="section-title">Áreas de <span class="highlight">Atuação</span></h2>
-        </div>
+    <section id="pilares" class="entry reveal">
+      <span class="entry-tab">§ 03 · Pilares</span>
+      <h2 class="entry-title">Áreas de <span class="highlight">Atuação</span></h2>
+      <p class="entry-intro">Seis frentes — clique pra expandir.</p>
 
-        <div class="pilares-container animate-on-scroll">
-          <div class="pilares-tabs" role="tablist" aria-label="Pilares de atuação">
-            <button class="pilar-tab active" role="tab" aria-selected="true" aria-controls="pilar-1" data-tab="1">
-              <span class="tab-icon">🏗️</span>
-              <span class="tab-label">Arquitetura</span>
-            </button>
-            <button class="pilar-tab" role="tab" aria-selected="false" aria-controls="pilar-2" data-tab="2">
-              <span class="tab-icon">⚙️</span>
-              <span class="tab-label">Engenharia</span>
-            </button>
-            <button class="pilar-tab" role="tab" aria-selected="false" aria-controls="pilar-3" data-tab="3">
-              <span class="tab-icon">📋</span>
-              <span class="tab-label">Governança</span>
-            </button>
-            <button class="pilar-tab" role="tab" aria-selected="false" aria-controls="pilar-4" data-tab="4">
-              <span class="tab-icon">📊</span>
-              <span class="tab-label">Analytics</span>
-            </button>
-            <button class="pilar-tab" role="tab" aria-selected="false" aria-controls="pilar-5" data-tab="5">
-              <span class="tab-icon">☁️</span>
-              <span class="tab-label">Cloud</span>
-            </button>
-            <button class="pilar-tab" role="tab" aria-selected="false" aria-controls="pilar-6" data-tab="6">
-              <span class="tab-icon">🎯</span>
-              <span class="tab-label">Cultura</span>
-            </button>
+      <div class="ledger">
+        <div class="ledger-row clickable open" data-toggle>
+          <div class="ledger-row-key"><span class="n">01</span></div>
+          <div class="ledger-row-body">
+            <h4>Arquitetura de Dados <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Fundação estrutural que sustenta tudo</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>Medallion Architecture:</strong> Bronze → Silver → Gold com isolamento total entre camadas</li>
+              <li><strong>Nomenclatura padronizada:</strong> <code>CAMADA.AREA_ENTIDADE</code> em toda a plataforma</li>
+              <li><strong>Isolamento de fontes:</strong> só a Bronze acessa o BD transacional de produção</li>
+              <li><strong>Particionamento:</strong> Parquet Gold particionado por área de negócio</li>
+              <li><strong>Rastreabilidade:</strong> coluna <code>DT_CARGA</code> em todas as tabelas Bronze</li>
+            </ul></div>
           </div>
-
-          <div class="pilares-content">
-            <div class="pilar-panel active" id="pilar-1" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">01</span>
-                <div>
-                  <h3>Arquitetura de Dados</h3>
-                  <p class="pilar-tagline">Fundação estrutural que sustenta tudo</p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Medallion Architecture:</strong> Bronze → Silver → Gold com isolamento total entre camadas</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Nomenclatura padronizada:</strong> <code>CAMADA.AREA_ENTIDADE</code> aplicada em toda a plataforma</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Isolamento de fontes:</strong> somente a camada Bronze tem acesso ao BD transacional de produção</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Particionamento:</strong> Parquet Gold particionado por área de negócio para performance analítica</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Rastreabilidade:</strong> coluna <code>DT_CARGA</code> em todas as tabelas Bronze para auditoria</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pilar-panel" id="pilar-2" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">02</span>
-                <div>
-                  <h3>Engenharia de Dados</h3>
-                  <p class="pilar-tagline">Pipelines que não mentem</p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Python end-to-end:</strong> extração, transformação e carga em scripts versionados no Git</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Airflow:</strong> DAGs com dependências explícitas, SLA por tarefa e alertas por e-mail em falha</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Reprocessamento seguro:</strong> <code>DT_CARGA</code> permite reprocessar qualquer janela sem duplicação</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Branches por camada:</strong> <code>bronze/</code>, <code>silver/</code>, <code>gold/</code> isolados no repositório Git</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Regras de negócio centralizadas:</strong> transformações documentadas e testáveis na camada Silver</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pilar-panel" id="pilar-3" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">03</span>
-                <div>
-                  <h3>Governança de Dados</h3>
-                  <p class="pilar-tagline">Dado sem dono é dado sem valor</p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Data Owners:</strong> responsável formal por domínio — Financeiro, Assistencial, Suprimentos</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Dicionário de dados:</strong> arquivos <code>.md</code> no Git com definição, tipo e origem de cada campo</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Changelog:</strong> histórico de alterações por tabela com data e motivo da mudança</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>SLA por área:</strong> tempo máximo de entrega documentado e monitorado via Airflow</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>LGPD:</strong> identificação de dados sensíveis na Silver e controle de acesso por domínio</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pilar-panel" id="pilar-4" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">04</span>
-                <div>
-                  <h3>Analytics & BI</h3>
-                  <p class="pilar-tagline">Da consulta ao insight executivo</p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>BI corporativo:</strong> migração de BI local para cloud com estrutura de espaços por área de negócio</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Inventário e governança:</strong> análise de uso via API de administração — priorização por acesso e criticidade</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Top painéis prioritários:</strong> reconstruídos sobre Gold + Parquet com performance otimizada</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Zero join no BI:</strong> cada painel consume 1 arquivo Parquet Gold pré-consolidado</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Autoatendimento analítico:</strong> espaços por nível — estratégico, gerencial, operacional</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pilar-panel" id="pilar-5" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">05</span>
-                <div>
-                  <h3>Dados em Cloud</h3>
-                  <p class="pilar-tagline">Escala sem limite <span class="badge badge-blue badge-sm">Em adoção</span></p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>OCI:</strong> Object Storage para data lake persistente + Oracle ADW como data warehouse analítico em nuvem</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>OCI Data Integration:</strong> pipelines gerenciados na nuvem eliminando manutenção de infraestrutura local</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Oracle Data Catalog:</strong> governança unificada com linhagem automática e controle de acesso granular</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Oracle Analytics Cloud:</strong> BI em nuvem com capacidades de ML integradas sobre os dados da plataforma</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>OCI Data Science:</strong> rastreamento de experimentos e serving de modelos de ML sobre a plataforma de dados</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="pilar-panel" id="pilar-6" role="tabpanel">
-              <div class="pilar-header">
-                <span class="pilar-num">06</span>
-                <div>
-                  <h3>Cultura de Dados</h3>
-                  <p class="pilar-tagline">Dado como ativo estratégico <span class="badge badge-amber badge-sm">Em construção</span></p>
-                </div>
-              </div>
-              <div class="pilar-body">
-                <div class="pilar-items">
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Capacitação:</strong> workshops internos sobre leitura de dados e uso dos painéis para equipes de negócio</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Self-service analítico:</strong> estrutura de espaços no BI que permite exploração autônoma com segurança</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Democratização:</strong> dados disponíveis para quem precisa, com controle de acesso adequado por função</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Decisão baseada em evidência:</strong> substituição de planilhas manuais por dashboards com fonte única de verdade</div>
-                  <div class="pilar-item"><span class="pi-icon">→</span><strong>Data Literacy:</strong> glossário de termos técnicos e de negócio para alinhamento entre TI e áreas funcionais</div>
-                </div>
-              </div>
-            </div>
+        </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">02</span></div>
+          <div class="ledger-row-body">
+            <h4>Engenharia de Dados <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Pipelines que não mentem</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>Python end-to-end:</strong> extração, transformação e carga versionadas no Git</li>
+              <li><strong>Airflow:</strong> DAGs com dependências explícitas, SLA e alertas por e-mail</li>
+              <li><strong>Reprocessamento seguro:</strong> <code>DT_CARGA</code> reprocessa sem duplicar</li>
+              <li><strong>Branches por camada:</strong> <code>bronze/</code>, <code>silver/</code>, <code>gold/</code></li>
+              <li><strong>Regras centralizadas:</strong> transformações documentadas na Silver</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">03</span></div>
+          <div class="ledger-row-body">
+            <h4>Governança de Dados <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Dado sem dono é dado sem valor</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>Data Owners:</strong> responsável formal por domínio</li>
+              <li><strong>Dicionário de dados:</strong> arquivos <code>.md</code> no Git</li>
+              <li><strong>Changelog:</strong> histórico de alterações por tabela</li>
+              <li><strong>SLA por área:</strong> monitorado via Airflow</li>
+              <li><strong>LGPD:</strong> dados sensíveis identificados na Silver</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">04</span></div>
+          <div class="ledger-row-body">
+            <h4>Analytics & BI <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Da consulta ao insight executivo</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>BI corporativo:</strong> espaços por área de negócio</li>
+              <li><strong>Inventário:</strong> uso via API — priorização por acesso e criticidade</li>
+              <li><strong>Top painéis:</strong> reconstruídos sobre Gold + Parquet</li>
+              <li><strong>Zero join:</strong> cada painel consome 1 Parquet Gold pré-consolidado</li>
+              <li><strong>Autoatendimento:</strong> espaços por nível — estratégico, gerencial, operacional</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">05</span></div>
+          <div class="ledger-row-body">
+            <h4>Dados em Cloud <span class="ledger-row-badge rb-future">Em adoção</span> <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Escala sem limite</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>OCI:</strong> Object Storage + Oracle ADW</li>
+              <li><strong>OCI Data Integration:</strong> pipelines gerenciados na nuvem</li>
+              <li><strong>Oracle Data Catalog:</strong> lineage automática e acesso granular</li>
+              <li><strong>Oracle Analytics Cloud:</strong> BI em nuvem com ML integrado</li>
+              <li><strong>OCI Data Science:</strong> experimentos e serving de modelos</li>
+            </ul></div>
+          </div>
+        </div>
+        <div class="ledger-row clickable" data-toggle>
+          <div class="ledger-row-key"><span class="n">06</span></div>
+          <div class="ledger-row-body">
+            <h4>Cultura de Dados <span class="ledger-row-badge rb-future">Em construção</span> <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="9 6 15 12 9 18"/></svg></h4>
+            <p>Dado como ativo estratégico</p>
+            <div class="ledger-row-detail"><ul class="ledger-row-detail-inner">
+              <li><strong>Capacitação:</strong> workshops sobre leitura de dados e uso dos painéis</li>
+              <li><strong>Self-service:</strong> exploração autônoma com segurança</li>
+              <li><strong>Democratização:</strong> acesso controlado por função</li>
+              <li><strong>Decisão por evidência:</strong> dashboards em vez de planilhas</li>
+              <li><strong>Data Literacy:</strong> glossário técnico e de negócio</li>
+            </ul></div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== STACK ===================== -->
-    <section id="stack" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">04 — Stack</span>
-          <h2 class="section-title">Tecnologias <span class="highlight">Dominadas</span></h2>
-          <p class="section-subtitle text-secondary">* Em adoção / planejado</p>
+    <section id="stack" class="entry entry-alt reveal">
+      <span class="entry-tab">§ 04 · Stack</span>
+      <h2 class="entry-title">Tecnologias <span class="highlight">Dominadas</span></h2>
+      <p class="entry-intro">* Em adoção / planejado</p>
+
+      <div class="stack-table">
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">Ingestão & Processamento</div>
+          <div class="stack-items">
+            <span class="stack-item">Python</span><span class="stack-item">SQL</span><span class="stack-item">Pandas</span>
+            <span class="stack-item future">PySpark *</span>
+          </div>
         </div>
-
-        <div class="stack-categories animate-on-scroll">
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">⇄</span> Ingestão & Processamento
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item"><div class="tech-dot"></div>Python</div>
-              <div class="tech-item"><div class="tech-dot"></div>SQL</div>
-              <div class="tech-item"><div class="tech-dot"></div>SQL</div>
-              <div class="tech-item"><div class="tech-dot"></div>Pandas</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>PySpark *</div>
-            </div>
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">Orquestração</div>
+          <div class="stack-items">
+            <span class="stack-item">Apache Airflow</span><span class="stack-item">DAGs</span><span class="stack-item">SLA</span><span class="stack-item">Alertas</span>
           </div>
-
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">⏱</span> Orquestração
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item"><div class="tech-dot"></div>Apache Airflow</div>
-              <div class="tech-item"><div class="tech-dot"></div>DAGs</div>
-              <div class="tech-item"><div class="tech-dot"></div>SLA</div>
-              <div class="tech-item"><div class="tech-dot"></div>Alertas</div>
-            </div>
+        </div>
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">Armazenamento</div>
+          <div class="stack-items">
+            <span class="stack-item">PostgreSQL</span><span class="stack-item">Apache Parquet</span>
+            <span class="stack-item future">GCS *</span><span class="stack-item future">Delta Lake *</span>
           </div>
-
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">🗄</span> Armazenamento
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item"><div class="tech-dot"></div>PostgreSQL</div>
-              <div class="tech-item"><div class="tech-dot"></div>Apache Parquet</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>GCS *</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>Delta Lake *</div>
-            </div>
+        </div>
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">Analytics & BI</div>
+          <div class="stack-items">
+            <span class="stack-item">BI Corporativo</span><span class="stack-item">BI Cloud</span><span class="stack-item">Formatos analíticos</span>
+            <span class="stack-item future">Oracle ADW *</span>
           </div>
-
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">📊</span> Analytics & BI
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item"><div class="tech-dot"></div>BI Corporativo</div>
-              <div class="tech-item"><div class="tech-dot"></div>BI Cloud</div>
-              <div class="tech-item"><div class="tech-dot"></div>Formatos analíticos</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>Oracle ADW *</div>
-            </div>
+        </div>
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">Cloud & Futuro</div>
+          <div class="stack-items">
+            <span class="stack-item future">OCI *</span><span class="stack-item future">Oracle ADW *</span>
+            <span class="stack-item future">Oracle Data Catalog *</span><span class="stack-item future">OCI Data Integration *</span>
           </div>
-
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">☁</span> Cloud & Futuro
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>OCI *</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>Oracle ADW *</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>Oracle Data Catalog *</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>OCI Data Integration *</div>
-            </div>
-          </div>
-
-          <div class="stack-category card">
-            <h4 class="category-title">
-              <span class="cat-icon">⎇</span> DevOps & Qualidade
-            </h4>
-            <div class="tech-grid">
-              <div class="tech-item"><div class="tech-dot"></div>Git</div>
-              <div class="tech-item"><div class="tech-dot"></div>GitHub</div>
-              <div class="tech-item"><div class="tech-dot"></div>Documentação .md</div>
-              <div class="tech-item future-tech"><div class="tech-dot future-dot"></div>Great Expectations *</div>
-            </div>
+        </div>
+        <div class="stack-cat-row">
+          <div class="stack-cat-name">DevOps & Qualidade</div>
+          <div class="stack-items">
+            <span class="stack-item">Git</span><span class="stack-item">GitHub</span><span class="stack-item">Documentação .md</span>
+            <span class="stack-item future">Great Expectations *</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== GOVERNANÇA ===================== -->
-    <section id="governanca" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">05 — Governança</span>
-          <h2 class="section-title">Modelo <span class="highlight">Implementado</span></h2>
-        </div>
+    <section id="governanca" class="entry reveal">
+      <span class="entry-tab">§ 05 · Governança</span>
+      <h2 class="entry-title">Modelo <span class="highlight">Implementado</span></h2>
 
-        <div class="gov-grid animate-on-scroll">
-          <div class="gov-col">
-            <h3>Data Owners por Domínio</h3>
-            <div class="owners-table">
-              <div class="table-header">
-                <span>Domínio</span>
-                <span>Data Owner</span>
-                <span>Tabelas principais</span>
-              </div>
-              <div class="table-row">
-                <span class="domain fin">Financeiro</span>
-                <span>Gerência Financeira</span>
-                <span class="mono-text">FATO_TRANSACAO · FATO_RESULTADO</span>
-              </div>
-              <div class="table-row">
-                <span class="domain ass">Mercado</span>
-                <span>Gerência Comercial</span>
-                <span class="mono-text">FATO_VENDAS· FATO_CLIENTES</span>
-              </div>
-              <div class="table-row">
-                <span class="domain sup">Suprimentos</span>
-                <span>Gerência Suprimentos</span>
-                <span class="mono-text">Consumo · Estoque · Ressuprimento</span>
-              </div>
-              <div class="table-row">
-                <span class="domain trans">Transversal</span>
-                <span>Liderança TI/Dados</span>
-                <span class="mono-text">DIM_CALENDARIO · DIM_EMPRESA · DIM_UNIDADE</span>
-              </div>
-            </div>
-          </div>
+      <h3 style="margin-bottom:1rem">Data Owners por domínio</h3>
+      <div class="owners-ledger">
+        <div class="owners-row head"><span>Domínio</span><span>Data Owner</span><span>Tabelas principais</span></div>
+        <div class="owners-row"><span class="domain-tag fin">Financeiro</span><span>Gerência Financeira</span><span class="mono-text">FATO_TRANSACAO · FATO_RESULTADO</span></div>
+        <div class="owners-row"><span class="domain-tag ass">Mercado</span><span>Gerência Comercial</span><span class="mono-text">FATO_VENDAS · FATO_CLIENTES</span></div>
+        <div class="owners-row"><span class="domain-tag sup">Suprimentos</span><span>Gerência Suprimentos</span><span class="mono-text">Consumo · Estoque · Ressuprimento</span></div>
+        <div class="owners-row"><span class="domain-tag trans">Transversal</span><span>Liderança TI/Dados</span><span class="mono-text">DIM_CALENDARIO · DIM_EMPRESA · DIM_UNIDADE</span></div>
+      </div>
 
-          <div class="gov-col">
-            <h3>Documentação no Git</h3>
-            <div class="checklist">
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>Catálogo de tabelas por camada</span>
-              </div>
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>Dicionário de dados (Silver)</span>
-              </div>
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>Regras de negócio documentadas</span>
-              </div>
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>Changelog por tabela</span>
-              </div>
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>SLA por área definido</span>
-              </div>
-              <div class="check-item done">
-                <span class="check-icon">✅</span>
-                <span>Matriz de Data Owners</span>
-              </div>
-              <div class="check-item wip">
-                <span class="check-icon">🔄</span>
-                <span>Lineage automatizado — Oracle Data Catalog (futuro)</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <h3 style="margin-bottom:1rem">Documentação no Git</h3>
+      <div class="checklist">
+        <div class="check-item"><span class="check-icon">✓</span><span>Catálogo de tabelas por camada</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span>Dicionário de dados (Silver)</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span>Regras de negócio documentadas</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span>Changelog por tabela</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span>SLA por área definido</span></div>
+        <div class="check-item"><span class="check-icon">✓</span><span>Matriz de Data Owners</span></div>
+        <div class="check-item wip"><span class="check-icon">○</span><span>Lineage automatizado — Oracle Data Catalog (futuro)</span></div>
       </div>
     </section>
 
-    <!-- ===================== CASE STUDY ===================== -->
-    <section id="case" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">06 — Caso de Uso</span>
-          <h2 class="section-title">Da Anarquia Analítica <br />à <span class="highlight">Governança</span></h2>
-          <p class="case-subtitle">700 painéis · Um plano · Resultados mensuráveis</p>
+    <!-- ===================== PROJETOS ===================== -->
+    <section id="projetos" class="entry entry-alt reveal">
+      <span class="entry-tab">§ 06 · Projetos</span>
+      <h2 class="entry-title">Três Marcos de <span class="highlight">Transformação</span></h2>
+      <p class="entry-intro">Legado → Data Lake local → Lakehouse cloud</p>
+
+      <div class="files">
+        <div class="file-row">
+          <div class="file-num">01</div>
+          <div>
+            <div class="file-head"><h3>Migração de DW: Sabius → Tasy</h3><span class="file-status fs-done">Concluído</span></div>
+            <div class="file-grid">
+              <div class="file-field"><div class="file-field-label">Problema</div><p>DW de uma operadora de saúde e de serviços próprios rodava sobre o sistema legado Sabius, prestes a ser substituído pelo Tasy — risco real de descontinuidade de relatórios em produção.</p></div>
+              <div class="file-field"><div class="file-field-label">Abordagem</div><p>Remapeamento de fontes e regras de negócio pra nova estrutura do Tasy, validação cruzada contra o histórico do Sabius, cutover coordenado com as áreas dependentes.</p></div>
+              <div class="file-field"><div class="file-field-label">Resultado</div><p>Continuidade dos relatórios corporativos sem janela de indisponibilidade percebida pelas áreas de negócio.</p></div>
+            </div>
+            <div class="file-tags"><span class="file-tag">Tasy · ERP Hospitalar</span><span class="file-tag">Migração de DW</span><span class="file-tag">Cutover controlado</span></div>
+          </div>
         </div>
 
-        <div class="case-grid animate-on-scroll">
-          <!-- Problema -->
-          <div class="case-col card case-problem">
-            <h3 class="case-col-title">
-              <span class="case-col-icon problem-icon">⚠</span> Problemas comuns em organizações
-            </h3>
-            <ul class="case-list">
-              <li>Alguns painéis criados sem critério ou responsável</li>
-              <li>Alguns painéis sem acesso nos últimos 90 dias</li>
-              <li>Painéis conectando direto no BD de produção</li>
-              <li>Sem Data Owner definido, sem controle de recarga</li>
-              <li>Recargas concorrentes causando lentidão sistêmica</li>
-            </ul>
-          </div>
-
-          <!-- Solução -->
-          <div class="case-col card case-solution">
-            <h3 class="case-col-title">
-              <span class="case-col-icon solution-icon">⚙</span> Possíveis Soluções
-            </h3>
-            <div class="solution-steps">
-              <div class="step"><span class="step-num">1</span><p>Inventário completo via console de administração + API do BI</p></div>
-              <div class="step"><span class="step-num">2</span><p>Estrutura de espaços por área: FINANCEIRO, OPERACIONAL, SUPRIMENTOS</p></div>
-              <div class="step"><span class="step-num">3</span><p>Top 20 mais acessados → prioridade máxima no Data Lake</p></div>
-              <div class="step"><span class="step-num">4</span><p>1 Parquet Gold por painel — zero join no script do BI</p></div>
-              <div class="step"><span class="step-num">5</span><p>Airflow aciona recarga via API após geração do Parquet</p></div>
-              <div class="step"><span class="step-num">6</span><p>Data Owner formal registrado para cada painel ativo</p></div>
+        <div class="file-row">
+          <div class="file-num">02</div>
+          <div>
+            <div class="file-head"><h3>Reestruturação da Área & Data Lake Local</h3><span class="file-status fs-done">Em produção</span></div>
+            <div class="file-grid">
+              <div class="file-field"><div class="file-field-label">Problema</div><p>Área de dados sem arquitetura formal: fluxos paralelos sem governança, painéis direto no banco transacional, nenhum dono definido por domínio.</p></div>
+              <div class="file-field"><div class="file-field-label">Abordagem</div><p>Medallion (Bronze → Silver → Gold) sobre PostgreSQL, orquestrado por Airflow com SLA, Data Owners formalizados e documentação versionada no Git.</p></div>
+              <div class="file-field"><div class="file-field-label">Resultado</div><p>Pipeline em produção hoje — isolamento da fonte transacional e governança ativa (ver §02 e §05 acima).</p></div>
             </div>
+            <div class="file-tags"><span class="file-tag">Bronze→Silver→Gold</span><span class="file-tag">Airflow</span><span class="file-tag">Data Owners</span></div>
           </div>
+        </div>
 
-          <!-- Resultados -->
-          <div class="case-col case-results">
-            <h3 class="case-col-title">
-              <span class="case-col-icon result-icon">↑</span> Possíveis Resultados
-            </h3>
-            <div class="results-grid">
-              <div class="result-card">
-                <div class="result-number">80<span>+</span></div>
-                <div class="result-label">Painéis arquivados ou excluídos</div>
-              </div>
-              <div class="result-card highlight-card">
-                <div class="result-number">↓<span>50%</span></div>
-                <div class="result-label">Tempo de recarga: 10–15min → 5–8min</div>
-              </div>
-              <div class="result-card">
-                <div class="result-number">↓<span>70%</span></div>
-                <div class="result-label">Conexões diretas ao BD de produção</div>
-              </div>
-              <div class="result-card">
-                <div class="result-number">↓<span>80%</span></div>
-                <div class="result-label">Painéis sem Data Owner documentado</div>
-              </div>
+        <div class="file-row">
+          <div class="file-num">03</div>
+          <div>
+            <div class="file-head"><h3>Data Lake Local → Lakehouse Databricks</h3><span class="file-status fs-wip">Em andamento</span></div>
+            <div class="file-grid">
+              <div class="file-field"><div class="file-field-label">Problema</div><p>Stack local (PostgreSQL, Docker, Airflow, GitLab) madura, mas limitada em escala e governança unificada.</p></div>
+              <div class="file-field"><div class="file-field-label">Abordagem</div><p>Elevação gradual da Bronze pra Delta Lake com Unity Catalog no Databricks, Airflow seguindo como orquestrador.</p></div>
+              <div class="file-field"><div class="file-field-label">Resultado</div><p>Iniciativa em andamento — alinhada ao roadmap cloud (§07).</p></div>
             </div>
+            <div class="file-tags"><span class="file-tag">Databricks</span><span class="file-tag">Delta Lake</span><span class="file-tag">Unity Catalog</span></div>
+            <p class="file-confidential">* Dados e nome da operadora omitidos por confidencialidade — sem repositório público.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== ROADMAP ===================== -->
-    <section id="roadmap" class="section">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">07 — Roadmap</span>
-          <h2 class="section-title">Visão de <span class="highlight">Futuro</span></h2>
-        </div>
+    <section id="roadmap" class="entry reveal">
+      <span class="entry-tab">§ 07 · Roadmap</span>
+      <h2 class="entry-title">Visão de <span class="highlight">Futuro</span></h2>
 
-        <div class="roadmap-timeline animate-on-scroll">
-          <div class="roadmap-item active">
-            <div class="roadmap-marker now"></div>
-            <div class="roadmap-card">
-              <span class="roadmap-period">Agora</span>
-              <h4>Data Lake Local</h4>
-              <ul>
-                <li>Bronze / Silver / Gold</li>
-                <li>Airflow em produção</li>
-                <li>BI organizado</li>
-                <li>Governança ativa</li>
-              </ul>
+      <div class="ledger">
+        <div class="ledger-row">
+          <div class="ledger-row-key"><span class="n">agora</span></div>
+          <div class="ledger-row-body">
+            <h4>Data Lake Local <span class="ledger-row-badge rb-current">Ativo</span></h4>
+            <div class="ledger-row-detail-inner" style="display:flex;flex-wrap:wrap;gap:0.3rem 1.2rem">
+              <span>Bronze / Silver / Gold</span><span>·</span><span>Airflow em produção</span><span>·</span><span>BI organizado</span><span>·</span><span>Governança ativa</span>
             </div>
           </div>
-          <div class="roadmap-connector"></div>
-          <div class="roadmap-item">
-            <div class="roadmap-marker"></div>
-            <div class="roadmap-card">
-              <span class="roadmap-period">+ 3 meses</span>
-              <h4>Pipeline Estável</h4>
-              <ul>
-                <li>Top painéis completo</li>
-                <li>Silver expandido</li>
-                <li>Docs 100% no Git</li>
-                <li>SLA monitorado</li>
-              </ul>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-row-key"><span class="n">+3 meses</span></div>
+          <div class="ledger-row-body">
+            <h4>Pipeline Estável</h4>
+            <div class="ledger-row-detail-inner" style="display:flex;flex-wrap:wrap;gap:0.3rem 1.2rem">
+              <span>Top painéis completo</span><span>·</span><span>Silver expandido</span><span>·</span><span>Docs 100% no Git</span><span>·</span><span>SLA monitorado</span>
             </div>
           </div>
-          <div class="roadmap-connector"></div>
-          <div class="roadmap-item">
-            <div class="roadmap-marker"></div>
-            <div class="roadmap-card">
-              <span class="roadmap-period">+ 6 meses</span>
-              <h4>OCI + Analytics Cloud</h4>
-              <ul>
-                <li>Object Storage</li>
-                <li>Oracle Data Catalog</li>
-                <li>Oracle ADW</li>
-                <li>OCI Data Integration</li>
-              </ul>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-row-key"><span class="n">+6 meses</span></div>
+          <div class="ledger-row-body">
+            <h4>OCI + Analytics Cloud</h4>
+            <div class="ledger-row-detail-inner" style="display:flex;flex-wrap:wrap;gap:0.3rem 1.2rem">
+              <span>Object Storage</span><span>·</span><span>Oracle Data Catalog</span><span>·</span><span>Oracle ADW</span><span>·</span><span>OCI Data Integration</span>
             </div>
           </div>
-          <div class="roadmap-connector"></div>
-          <div class="roadmap-item">
-            <div class="roadmap-marker"></div>
-            <div class="roadmap-card">
-              <span class="roadmap-period">+ 12 meses</span>
-              <h4>Analytics Avançado</h4>
-              <ul>
-                <li>ML com MLflow</li>
-                <li>Streaming / IoT</li>
-                <li>IA sobre dados</li>
-                <li>Data Mesh</li>
-              </ul>
+        </div>
+        <div class="ledger-row">
+          <div class="ledger-row-key"><span class="n">+12 meses</span></div>
+          <div class="ledger-row-body">
+            <h4>Analytics Avançado</h4>
+            <div class="ledger-row-detail-inner" style="display:flex;flex-wrap:wrap;gap:0.3rem 1.2rem">
+              <span>ML com MLflow</span><span>·</span><span>Streaming / IoT</span><span>·</span><span>IA sobre dados</span><span>·</span><span>Data Mesh</span>
             </div>
           </div>
         </div>
@@ -856,51 +520,24 @@
     </section>
 
     <!-- ===================== CONTATO ===================== -->
-    <section id="contato" class="section section-alt">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">08 — Contato</span>
-          <h2 class="section-title">Vamos <span class="highlight">Conversar</span></h2>
-          <p class="contact-subtitle">Disponível para projetos de arquitetura de dados, consultoria em governança e implementação de pipelines end-to-end.</p>
-        </div>
+    <section id="contato" class="entry entry-alt reveal">
+      <span class="entry-tab">§ 08 · Contato</span>
+      <h2 class="entry-title">Vamos <span class="highlight">Conversar</span></h2>
+      <p class="entry-intro">Disponível para projetos de arquitetura de dados, consultoria em governança e implementação de pipelines end-to-end.</p>
 
-        <div class="contact-grid animate-on-scroll">
-          <!-- LinkedIn - substitua [SEU_LINKEDIN] -->
-          <a href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" rel="noopener noreferrer" class="contact-card card">
-            <div class="contact-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-label">LinkedIn</span>
-              <span class="contact-value">Perfil Profissional</span>
-            </div>
-            <span class="contact-arrow">→</span>
-          </a>
-
-          <!-- GitHub - substitua [SEU_GITHUB] -->
-          <a href="https://github.com/DalissonSilva/datalake-dashboard-ans" target="_blank" rel="noopener noreferrer" class="contact-card card">
-            <div class="contact-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-label">GitHub</span>
-              <span class="contact-value">Repositórios & Projetos</span>
-            </div>
-            <span class="contact-arrow">→</span>
-          </a>
-
-          <!-- E-mail - substitua dalissonmuniz@outlook.com -->
-          <a href="mailto:dalissonmuniz@outlook.com" class="contact-card card">
-            <div class="contact-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            </div>
-            <div class="contact-info">
-              <span class="contact-label">E-mail</span>
-              <span class="contact-value">dalissonmuniz@outlook.com</span>
-            </div>
-            <span class="contact-arrow">→</span>
-          </a>
-        </div>
+      <div class="contact-ledger">
+        <a href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" rel="noopener noreferrer" class="contact-row">
+          <span class="contact-row-label"><span class="contact-row-name">LinkedIn</span><span class="contact-row-value">Perfil Profissional</span></span>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="https://github.com/DalissonSilva" target="_blank" rel="noopener noreferrer" class="contact-row">
+          <span class="contact-row-label"><span class="contact-row-name">GitHub</span><span class="contact-row-value">Repositórios & Projetos</span></span>
+          <span class="contact-arrow">→</span>
+        </a>
+        <a href="mailto:dalissonmuniz@outlook.com" class="contact-row">
+          <span class="contact-row-label"><span class="contact-row-name">E-mail</span><span class="contact-row-value">dalissonmuniz@outlook.com</span></span>
+          <span class="contact-arrow">→</span>
+        </a>
       </div>
     </section>
 
@@ -908,13 +545,8 @@
 
   <!-- FOOTER -->
   <footer class="footer">
-    <div class="container footer-inner">
-      <p class="footer-text">
-        <!-- Substitua Dálisson Silva -->
-        <span class="footer-name">Dálisson Silva</span> — Engenharia de Dados Full Cycle
-      </p>
-      <p class="footer-stack">BD Transacional → Python → Airflow → PostgreSQL → Parquet → BI Analytics → OCI</p>
-    </div>
+    <p class="footer-text"><span class="footer-name">Dálisson Silva</span> — Engenharia de Dados Full Cycle</p>
+    <p class="footer-stack">BD Transacional → Python → Airflow → PostgreSQL → Parquet → BI Analytics → OCI</p>
   </footer>
 
   <!-- BACK TO TOP -->

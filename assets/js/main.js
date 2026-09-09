@@ -1,32 +1,26 @@
 /* ============================================================
-   PORTFOLIO DADOS — JavaScript Principal
+   PORTFOLIO DADOS — JavaScript Principal (Dossiê)
    ============================================================ */
 
 (function () {
   'use strict';
 
-  // ── Scroll Progress Bar ──
-  const scrollProgress = document.getElementById('scrollProgress');
+  // ── Spine progress (scroll) ──
+  const spineProgress = document.getElementById('spineProgress');
   function updateProgress() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    scrollProgress.style.width = pct + '%';
+    spineProgress.style.setProperty('--p', pct + '%');
   }
 
-  // ── Navbar scroll effect ──
-  const navbar = document.getElementById('navbar');
   const backToTop = document.getElementById('backToTop');
-
   function onScroll() {
     updateProgress();
-    const y = window.scrollY;
-    navbar.classList.toggle('scrolled', y > 60);
-    backToTop.classList.toggle('visible', y > 400);
+    backToTop.classList.toggle('visible', window.scrollY > 400);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // ── Back to top ──
   backToTop.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
@@ -46,42 +40,40 @@
     localStorage.setItem('portfolio-theme', next);
   });
 
-  // ── Hamburger Menu ──
+  // ── Mobile nav (hamburger overlay) ──
   const hamburger = document.getElementById('hamburger');
-  const navLinks  = document.getElementById('navLinks');
+  const mobileNav = document.getElementById('mobileNav');
 
   hamburger.addEventListener('click', () => {
     const isOpen = hamburger.classList.toggle('open');
-    navLinks.classList.toggle('open', isOpen);
+    mobileNav.classList.toggle('open', isOpen);
     hamburger.setAttribute('aria-expanded', String(isOpen));
   });
 
-  // Close menu on nav link click
-  navLinks.querySelectorAll('.nav-link').forEach(link => {
+  mobileNav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       hamburger.classList.remove('open');
-      navLinks.classList.remove('open');
+      mobileNav.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
     });
   });
 
-  // ── Intersection Observer — animate on scroll ──
-  const animItems = document.querySelectorAll('.animate-on-scroll');
-  const observer = new IntersectionObserver(
+  // ── Scroll reveal ──
+  const revealItems = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const delay = entry.target.dataset.delay || 0;
-          setTimeout(() => entry.target.classList.add('visible'), Number(delay));
-          observer.unobserve(entry.target);
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
         }
       });
     },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
   );
-  animItems.forEach(el => observer.observe(el));
+  revealItems.forEach(el => revealObserver.observe(el));
 
-  // ── Animated Counters ──
+  // ── Animated counters ──
   function animateCounter(el) {
     const target = parseInt(el.dataset.count, 10);
     const suffix = el.dataset.suffix || '';
@@ -91,7 +83,6 @@
     function tick(now) {
       const elapsed = now - start;
       const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
       const value = Math.round(eased * target);
       el.textContent = value + suffix;
@@ -104,55 +95,22 @@
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          const el = entry.target;
-          if (!el.classList.contains('zero-metric')) {
-            animateCounter(el);
-          }
-          metricObserver.unobserve(el);
+          animateCounter(entry.target);
+          metricObserver.unobserve(entry.target);
         }
       });
     },
     { threshold: 0.5 }
   );
+  document.querySelectorAll('[data-count]').forEach(el => metricObserver.observe(el));
 
-  document.querySelectorAll('[data-count]').forEach(el => {
-    metricObserver.observe(el);
+  // ── Ledger rows (click to expand — replaces eras timeline + pilar tabs) ──
+  document.querySelectorAll('.ledger-row[data-toggle]').forEach(row => {
+    row.addEventListener('click', () => row.classList.toggle('open'));
   });
 
-  // ── Pilares Tabs ──
-  const tabs   = document.querySelectorAll('.pilar-tab');
-  const panels = document.querySelectorAll('.pilar-panel');
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.tab;
-
-      tabs.forEach(t => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      panels.forEach(p => p.classList.remove('active'));
-
-      tab.classList.add('active');
-      tab.setAttribute('aria-selected', 'true');
-      const panel = document.getElementById('pilar-' + target);
-      if (panel) panel.classList.add('active');
-    });
-  });
-
-  // ── Eras Timeline (click to expand) ──
-  const eraItems = document.querySelectorAll('.era-item');
-  eraItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const isOpen = item.classList.contains('open') || item.classList.contains('active');
-      eraItems.forEach(i => i.classList.remove('open', 'active'));
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-
-  // ── Copy to Clipboard ──
+  // ── Copy to clipboard ──
   const toast = document.getElementById('toast');
-
   function showToast(msg) {
     toast.textContent = msg;
     toast.classList.add('show');
@@ -166,7 +124,6 @@
       try {
         await navigator.clipboard.writeText(text);
         btn.classList.add('copied');
-        btn.querySelector('svg + text, svg').insertAdjacentText?.('afterend', '');
         showToast('Copiado: ' + text);
         setTimeout(() => btn.classList.remove('copied'), 2000);
       } catch {
@@ -181,26 +138,24 @@
       const target = document.querySelector(anchor.getAttribute('href'));
       if (!target) return;
       e.preventDefault();
-      const offset = 80;
+      const isMobile = window.innerWidth <= 900;
+      const offset = isMobile ? 68 : 24;
       const top = target.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top, behavior: 'smooth' });
     });
   });
 
-  // ── Active nav link highlight on scroll ──
-  const sections = document.querySelectorAll('section[id]');
-  const navLinkEls = document.querySelectorAll('.nav-links .nav-link[href^="#"]');
+  // ── Active spine mark on scroll ──
+  const sections = document.querySelectorAll('main section[id]');
+  const spineMarkEls = document.querySelectorAll('.spine-mark[data-target]');
 
   const sectionObserver = new IntersectionObserver(
     (entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const id = entry.target.getAttribute('id');
-          navLinkEls.forEach(link => {
-            link.style.color = '';
-            if (link.getAttribute('href') === '#' + id) {
-              link.style.color = 'var(--accent-blue)';
-            }
+          spineMarkEls.forEach(mark => {
+            mark.classList.toggle('active', mark.dataset.target === id);
           });
         }
       });
