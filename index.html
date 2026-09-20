@@ -445,7 +445,7 @@ a{color:inherit}
         <div class="panel-tag">Saúde suplementar</div>
         <p>Cheguei numa área de dados sem arquitetura formal: fluxos paralelos sem governança, painéis conectados direto no banco transacional e nenhum responsável definido por domínio. Reestruturei em torno de uma <strong>arquitetura medalhão sobre PostgreSQL</strong>, orquestrada por Airflow com SLA e alertas, com camada gold entregue em Parquet — um arquivo por painel, sem join em tempo de consulta.</p>
         <p>Também conduzi a <strong>migração do data warehouse</strong> de um ERP hospitalar legado para o sistema que o substituiu: remapeamento de fontes e regras, validação cruzada contra o histórico e cutover coordenado com as áreas — sem janela de indisponibilidade percebida pelo negócio.</p>
-        <p>Em andamento: elevar a camada bronze para <strong>Delta Lake com Unity Catalog no Databricks</strong>, mantendo o Airflow como orquestrador.</p>
+        <p>Em andamento: estou <strong>implantando o Databricks na empresa</strong>, de ponta a ponta e <strong>sem Airflow</strong>. Todas as camadas rodam no Databricks — da integração do ERP até a bronze e, dali, prata e ouro em <strong>Delta Lake com Unity Catalog</strong>, orquestradas por Databricks Jobs. Junto com a implantação, faço a <strong>revisão de todo o processo</strong>: fontes, regras de transformação, governança e monitoramento.</p>
       </div>
       <div class="marks rv">
         <div class="mark glass"><div class="n">150+</div><div class="l">painéis inventariados e governados</div></div>
