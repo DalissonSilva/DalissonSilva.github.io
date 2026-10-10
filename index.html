@@ -5,532 +5,710 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>Dálisson Silva — Engenharia de Dados</title>
 <meta name="description" content="Engenheiro de dados full cycle: ingestão, arquitetura medalhão, governança e analytics. Pipelines em produção no setor de saúde suplementar e projetos abertos em Databricks, Snowflake e OCI." />
-<meta name="theme-color" content="#080B12" />
+<meta name="theme-color" content="#101010" />
+<meta name="color-scheme" content="dark" />
 <meta property="og:title" content="Dálisson Silva — Engenharia de Dados" />
 <meta property="og:description" content="Do dado bruto à decisão: pipelines orquestrados, arquitetura medalhão e governança ativa." />
 <meta property="og:type" content="website" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet" />
 
 <style>
 :root{
-  --bg:#080B12;
-  --cream:#EFE9DD;
-  --text:#E4E7EE;
-  --muted:#9BA5B8;
-  --faint:#6B7689;
+  --canvas:#101010;
+  --carbon:#1d1a18;
+  --stroke:#3d3a39;
+  --graphite:#4d4947;
+  --granite:#8a8380;
+  --stone:#b8b3b0;
+  --bone:#eeeeee;
+  --chalk:#fafafa;
+  --ink:#101010;
+  --orange:#ee6018;
+  --green:#a0ca92;
 
-  --glass-top:rgba(255,255,255,.085);
-  --glass-bot:rgba(255,255,255,.028);
-  --glass-line:rgba(255,255,255,.13);
-  --glass-line-hi:rgba(255,255,255,.22);
-
-  --bronze:#C2794A;
-  --steel:#9BA7B8;
-  --brass:#D4AC5A;
-  --signal:#6E9BFF;
-  --live:#4ADE80;
+  --font:'Geist','Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:'Geist Mono','JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 
   --max:1200px;
-  --gutter:clamp(1.15rem,4vw,3rem);
-  --r:22px;
+  --gutter:clamp(16px,4vw,40px);
+  --section-gap:clamp(72px,10vw,120px);
+  --r-sm:3px;
+  --r-card:10px;
+  --r-panel:20px;
+  --t:.18s cubic-bezier(.4,0,.2,1);
+
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;background:var(--canvas)}
 @media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Manrope,system-ui,-apple-system,sans-serif;
-  font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  margin:0;background:var(--canvas);color:var(--bone);
+  font-family:var(--font);font-size:16px;font-weight:400;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
 a{color:inherit}
-:focus-visible{outline:2px solid var(--signal);outline-offset:3px;border-radius:8px}
+:focus-visible{outline:1px solid var(--chalk);outline-offset:3px;border-radius:var(--r-sm)}
+::selection{background:var(--bone);color:var(--ink)}
 
-/* ---------- aurora ---------- */
-.aurora{position:fixed;inset:-25vmax;z-index:-2;pointer-events:none;filter:blur(88px);opacity:1}
-.aurora span{position:absolute;display:block;border-radius:50%}
-.a1{width:70vmax;height:55vmax;left:-8vmax;top:-6vmax;background:radial-gradient(circle at 50% 50%,#1B3C7A 0%,rgba(27,60,122,0) 68%)}
-.a2{width:56vmax;height:48vmax;right:-6vmax;top:6vmax;background:radial-gradient(circle at 50% 50%,#2C3350 0%,rgba(44,51,80,0) 70%)}
-.a3{width:62vmax;height:52vmax;left:18vmax;bottom:-12vmax;background:radial-gradient(circle at 50% 50%,#5C4936 0%,rgba(92,73,54,0) 70%)}
-.a4{width:44vmax;height:40vmax;right:12vmax;bottom:4vmax;background:radial-gradient(circle at 50% 50%,#24607F 0%,rgba(36,96,127,0) 70%)}
-@media (prefers-reduced-motion: no-preference){
-  .a1{animation:drift1 34s ease-in-out infinite alternate}
-  .a2{animation:drift2 42s ease-in-out infinite alternate}
-  .a3{animation:drift3 38s ease-in-out infinite alternate}
-}
-@keyframes drift1{to{transform:translate3d(6vmax,4vmax,0) scale(1.12)}}
-@keyframes drift2{to{transform:translate3d(-5vmax,6vmax,0) scale(1.08)}}
-@keyframes drift3{to{transform:translate3d(4vmax,-5vmax,0) scale(1.1)}}
-.grain{
-  position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
-  background:
-    radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.055),transparent 55%),
-    linear-gradient(180deg,rgba(8,11,18,0) 60%,rgba(8,11,18,.85) 100%);
-}
-
-/* ---------- glass ---------- */
-.glass{
-  position:relative;border-radius:var(--r);
-  background:linear-gradient(150deg,var(--glass-top),var(--glass-bot));
-  border:1px solid var(--glass-line);
-  box-shadow:
-    inset 0 1px 0 var(--glass-line-hi),
-    inset 0 -1px 0 rgba(0,0,0,.25),
-    0 22px 60px rgba(0,0,0,.45);
-}
-@supports (backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px)){
-  .glass{-webkit-backdrop-filter:blur(26px) saturate(165%);backdrop-filter:blur(26px) saturate(165%)}
-}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .glass{background:rgba(22,27,38,.92)}
-}
-.glass::after{
-  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:linear-gradient(140deg,rgba(255,255,255,.14) 0%,rgba(255,255,255,0) 38%);
-  opacity:.65;
-}
-
-/* ---------- shell ---------- */
 .wrap{max-width:var(--max);margin:0 auto;padding-inline:var(--gutter)}
-.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
-.eyebrow{
-  font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--faint);margin:0;
+.mono{
+  font-family:var(--mono);font-size:12px;line-height:1.2;letter-spacing:-.02em;
+  text-transform:uppercase;
 }
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0;color:var(--stone)}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--orange);flex:none}
+.pulse.ok{background:var(--green)}
+
+/* ---------- botões ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 14px;
+  border-radius:var(--r-sm);border:0;font:inherit;font-size:14px;text-decoration:none;
+  transition:background-color var(--t),color var(--t),border-color var(--t);
+}
+.btn-dark{background:var(--carbon);color:var(--bone)}
+.btn-dark:hover{background:#2a2624}
+.btn-light{background:var(--chalk);color:var(--ink)}
+.btn-light:hover{background:#ffffff}
+.btn-ink{background:var(--ink);color:var(--bone)}
+.btn-ink:hover{background:#2a2624}
+.ghost{
+  display:inline-flex;align-items:center;gap:10px;padding:12px 0;
+  border-bottom:1px solid var(--stroke);color:var(--bone);font-size:14px;text-decoration:none;
+  transition:color var(--t),border-color var(--t);
+}
+.ghost:hover{color:var(--chalk);border-color:var(--chalk)}
+.ghost .ar{transition:transform var(--t)}
+.ghost:hover .ar{transform:translateX(3px)}
 
 /* ---------- nav ---------- */
-.nav{position:fixed;top:max(.9rem,env(safe-area-inset-top));left:0;right:0;z-index:60;display:flex;justify-content:center;padding-inline:var(--gutter)}
-.nav-in{
-  display:flex;align-items:center;gap:.3rem;padding:.4rem .45rem;border-radius:999px;
-}
-.nav-brand{
-  font-weight:800;font-size:.9rem;letter-spacing:-.01em;text-decoration:none;
-  padding:.42rem .9rem;border-radius:999px;color:var(--cream);white-space:nowrap;
-}
-.nav-brand i{font-style:normal;color:var(--brass)}
-.nav a.nav-link{
-  font-family:"IBM Plex Mono",monospace;font-size:.76rem;text-decoration:none;color:var(--muted);
-  padding:.42rem .8rem;border-radius:999px;transition:color .18s,background .18s;
-}
-.nav a.nav-link:hover{color:var(--cream);background:rgba(255,255,255,.09)}
-@media (max-width:720px){ .nav a.nav-link{display:none} .nav-in{padding:.25rem} }
+.nav{position:sticky;top:0;z-index:50;background:var(--canvas);border-bottom:1px solid var(--carbon)}
+.nav-in{display:flex;align-items:center;gap:28px;height:64px}
+.wordmark{margin-right:auto;color:var(--bone);text-decoration:none;letter-spacing:.08em}
+.nav-link{font-size:14px;text-transform:uppercase;color:var(--bone);text-decoration:none;transition:color var(--t)}
+.nav-link:hover{color:var(--granite)}
+.nav .btn{height:32px}
+@media (max-width:760px){ .nav-link{display:none} }
 
 /* ---------- hero ---------- */
-.hero{
-  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-  padding-block:clamp(6rem,14vh,9rem) clamp(2.5rem,6vh,4rem);
+.hero{padding-block:clamp(56px,8vw,104px) var(--section-gap)}
+.hero-head{
+  display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:32px 80px;align-items:end;
 }
-.hero-top{max-width:900px}
+@media (max-width:900px){ .hero-head{grid-template-columns:1fr} }
 .hero h1{
-  font-weight:800;font-size:clamp(2.7rem,8.2vw,6rem);line-height:.95;
-  letter-spacing:-.04em;margin:1rem 0 0;color:var(--cream);max-width:14ch;
+  font-weight:400;font-size:clamp(34px,4.2vw,52px);line-height:1.08;letter-spacing:-.035em;
+  margin:24px 0 0;color:var(--bone);max-width:21ch;text-wrap:balance;
 }
-.hero h1 em{font-style:normal;color:transparent;background:linear-gradient(100deg,var(--brass),var(--bronze));-webkit-background-clip:text;background-clip:text}
-.hero-lead{margin:1.5rem 0 0;color:var(--muted);max-width:52ch;font-size:clamp(1rem,1.5vw,1.12rem)}
-.hero-sign{
-  margin-top:auto;padding-top:2.5rem;display:flex;flex-wrap:wrap;
-  gap:1rem 2rem;align-items:flex-end;justify-content:space-between;
-}
-.pill{
-  display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .95rem;border-radius:999px;
-  font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--muted);
-}
-.pulse{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(74,222,128,.5)}
-@media (prefers-reduced-motion: no-preference){ .pulse{animation:beat 2.6s ease-out infinite} }
-@keyframes beat{70%{box-shadow:0 0 0 9px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
-.hero-name{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--faint)}
+.hero-lead{margin:0;color:var(--granite);max-width:44ch}
+.hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:32px}
+.hero .dash{margin-top:clamp(48px,6vw,72px)}
 
-/* console: signature */
-.console{margin-top:2.6rem;padding:1.15rem 1.3rem 1.25rem}
-.console-head{
-  display:flex;align-items:center;gap:.5rem;padding-bottom:.9rem;margin-bottom:1.1rem;
-  border-bottom:1px solid rgba(255,255,255,.09);
+/* dashboard */
+.dash{
+  background:#0d0d0d;border:1px solid var(--carbon);border-radius:var(--r-card);overflow:hidden;
 }
-.dots{display:flex;gap:.32rem}
-.dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16)}
-.console-title{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--faint);letter-spacing:.1em}
-.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;position:relative}
-.stages::before{
-  content:"";position:absolute;left:6%;right:6%;top:9px;height:1px;
-  background:linear-gradient(90deg,rgba(255,255,255,.05),rgba(255,255,255,.22),rgba(255,255,255,.05));
-}
-.stage{position:relative;text-align:center;padding-top:1.55rem}
-.stage b{
-  position:absolute;top:2px;left:50%;transform:translateX(-50%);
-  width:15px;height:15px;border-radius:50%;
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);
-}
-.stage.s-b b{background:var(--bronze);border-color:var(--bronze);box-shadow:0 0 14px rgba(194,121,74,.5)}
-.stage.s-s b{background:var(--steel);border-color:var(--steel);box-shadow:0 0 14px rgba(155,167,184,.4)}
-.stage.s-g b{background:var(--brass);border-color:var(--brass);box-shadow:0 0 14px rgba(212,172,90,.5)}
-.stage .k{display:block;font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--cream)}
-.stage .v{display:block;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--faint);margin-top:.2rem}
-@media (max-width:680px){
-  .stages{grid-template-columns:repeat(2,1fr);row-gap:1rem}
-  .stages::before{display:none}
-  .stage{text-align:left;padding-top:0;padding-left:1.5rem}
-  .stage b{top:.3rem;left:0;transform:none}
-}
-
-/* ---------- sections ---------- */
-.section{padding-block:clamp(3.5rem,9vh,6.5rem)}
-.section-head{margin-bottom:2.2rem}
-.section-head h2{
-  font-weight:800;font-size:clamp(1.65rem,3.4vw,2.4rem);letter-spacing:-.032em;
-  line-height:1.12;margin:.6rem 0 0;color:var(--cream);max-width:20ch;
-}
-.section-head p{margin:.8rem 0 0;color:var(--muted);max-width:62ch}
-
-/* ---------- cases ---------- */
-.cases{display:grid;gap:1.3rem}
-.case{
-  padding:clamp(1.3rem,3vw,2.3rem);
-  display:grid;grid-template-columns:1.4fr .85fr;gap:clamp(1.4rem,4vw,2.8rem);
-  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;
-}
-.case:hover{transform:translateY(-4px);box-shadow:inset 0 1px 0 var(--glass-line-hi),0 30px 70px rgba(0,0,0,.5)}
-@media (max-width:880px){ .case{grid-template-columns:1fr} }
-.case h3{
-  font-weight:800;font-size:clamp(1.25rem,2.4vw,1.7rem);letter-spacing:-.028em;
-  margin:.55rem 0 0;line-height:1.14;color:var(--cream);
-}
-.case-sub{margin:.6rem 0 0;color:var(--muted);max-width:50ch}
-.points{margin:1.5rem 0 0;padding:0;list-style:none;display:grid;gap:.85rem}
-.points li{position:relative;padding-left:1.15rem;font-size:.93rem;color:var(--muted)}
-.points li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--brass)}
-.points b{color:var(--cream);font-weight:700}
-
-.side{border-left:1px solid rgba(255,255,255,.09);padding-left:clamp(1.2rem,3vw,2rem)}
-@media (max-width:880px){ .side{border-left:0;border-top:1px solid rgba(255,255,255,.09);padding-left:0;padding-top:1.4rem} }
-.side-label{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:.75rem}
-.flow{display:grid;gap:.45rem;font-family:"IBM Plex Mono",monospace;font-size:.73rem;color:var(--muted);margin-bottom:1.5rem}
-.flow-line{display:flex;flex-wrap:wrap;gap:.35rem .45rem;align-items:center}
-.flow i{font-style:normal;color:var(--faint)}
-.m{padding:.14rem .5rem;border-radius:999px;color:#10141C;font-weight:700}
-.m-b{background:var(--bronze)}.m-s{background:var(--steel)}.m-g{background:var(--brass)}
-.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.5rem}
-.chip{
-  font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--muted);
-  border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);
-  border-radius:999px;padding:.24rem .6rem;
-}
-.actions{display:grid;gap:.5rem}
-.btn{
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;text-decoration:none;
-  padding:.72rem .95rem;border-radius:14px;border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.05);transition:background .2s,border-color .2s,transform .2s;
-}
-.btn:hover{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.26);transform:translateY(-1px)}
-.btn .t{font-size:.88rem;font-weight:700;color:var(--cream)}
-.btn .u{display:block;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--faint);margin-top:.12rem}
-.btn .ar{color:var(--brass)}
-.btn.key{
-  background:linear-gradient(140deg,rgba(212,172,90,.22),rgba(194,121,74,.14));
-  border-color:rgba(212,172,90,.42);
-}
-.btn.key:hover{background:linear-gradient(140deg,rgba(212,172,90,.32),rgba(194,121,74,.2))}
-
-/* ---------- widgets ---------- */
-.grid-2{display:grid;grid-template-columns:1.25fr .75fr;gap:1.3rem;align-items:start}
-@media (max-width:880px){ .grid-2{grid-template-columns:1fr} }
-.panel{padding:clamp(1.3rem,3vw,2rem)}
-.panel p{color:var(--muted);margin:0 0 1rem}
-.panel p:last-child{margin-bottom:0}
-.panel strong{color:var(--cream);font-weight:700}
-.panel-tag{font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--faint);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.9rem}
-
-.marks{display:grid;gap:.8rem}
-.mark{padding:1.05rem 1.2rem;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045)}
-.mark .n{font-weight:800;font-size:1.75rem;letter-spacing:-.035em;line-height:1;color:var(--cream)}
-.mark .l{margin-top:.4rem;font-size:.8rem;color:var(--faint);line-height:1.45}
-
-/* ---------- rules ---------- */
-.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-.rule{padding:1.4rem 1.5rem}
-.rule h3{font-weight:700;font-size:1rem;margin:0 0 .5rem;color:var(--cream);letter-spacing:-.01em}
-.rule p{margin:0;font-size:.89rem;color:var(--muted)}
-
-/* ---------- stack ---------- */
-.stack{padding:clamp(1.2rem,3vw,2rem)}
-.srow{display:grid;grid-template-columns:180px 1fr;gap:.6rem 1.8rem;padding:.85rem 0;border-bottom:1px solid rgba(255,255,255,.07);align-items:baseline}
-.srow:last-child{border-bottom:0}
-@media (max-width:680px){ .srow{grid-template-columns:1fr} }
-.sk{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--faint)}
-.sv{display:flex;flex-wrap:wrap;gap:.3rem 0}
-.sv span{font-size:.88rem;color:var(--text)}
-.sv span:not(:last-child)::after{content:"·";color:var(--faint);margin:0 .55rem}
-.sv span.soon{color:var(--faint)}
-
-/* ---------- closing ---------- */
-.closing{text-align:center;padding-block:clamp(4rem,12vh,8rem)}
-.closing .tagline{
-  display:inline-block;padding:.5rem 1.1rem;border-radius:999px;margin-bottom:.4rem;
-  font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--muted);
-}
-.closing h2{
-  font-weight:800;font-size:clamp(2.6rem,9vw,6rem);letter-spacing:-.045em;line-height:1;
-  margin:.4rem 0 0;color:var(--cream);
-}
-.closing p{margin:1.3rem auto 0;color:var(--muted);max-width:44ch}
-.cta{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-top:2.2rem}
-.cta .btn{min-width:230px;text-align:left}
-
-/* ---------- footer ---------- */
-.foot{
-  padding-block:1.7rem;margin-top:1rem;border-top:1px solid rgba(255,255,255,.08);
-  display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;justify-content:space-between;
-  font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--faint);
-}
-
-/* ---------- reveal ---------- */
 @media (prefers-reduced-motion: no-preference){
-  .rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
-  .rv.in{opacity:1;transform:none}
+  .dash{animation:frameIn .7s cubic-bezier(.4,0,.2,1) .1s both}
+}
+@keyframes frameIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.dash-bar{
+  display:flex;align-items:center;gap:16px;height:40px;padding:0 16px;
+  background:#141312;border-bottom:1px solid var(--carbon);color:var(--granite);
+}
+.lights{display:flex;gap:6px}
+.lights i{width:10px;height:10px;border-radius:50%;background:var(--graphite)}
+.dash-bar .title{flex:1}
+.dash-bar .live{display:inline-flex;align-items:center;gap:8px;color:var(--stone)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr)}
+.tile{padding:20px;border-right:1px solid var(--carbon);border-bottom:1px solid var(--carbon);min-width:0}
+.tile:last-child{border-right:0}
+.tile .mono{color:var(--stone)}
+.tile .val{font-size:36px;line-height:1.1;letter-spacing:-.031em;margin-top:16px;color:var(--bone)}
+.tile .cap{font-size:12px;line-height:1.4;color:var(--granite);margin-top:6px;min-height:34px}
+.tile svg{display:block;width:100%;height:40px;margin-top:12px}
+.tile svg path{fill:none;stroke-width:1;vector-effect:non-scaling-stroke}
+@media (max-width:640px){
+  .tiles{grid-template-columns:1fr 1fr}
+  .tile:nth-child(2){border-right:0}
+}
+.log{font-family:var(--mono);font-size:12px;letter-spacing:-.02em}
+.log-row{
+  display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;
+  padding:12px 20px;border-bottom:1px solid var(--carbon);color:var(--granite);
+}
+.log-row:last-child{border-bottom:0}
+.log-row.head{text-transform:uppercase;color:var(--stone)}
+.log-row .stg{color:var(--bone);text-transform:uppercase}
+.log-row .st{display:inline-flex;align-items:center;gap:8px;text-transform:uppercase}
+.log-row .st.ok{color:var(--green)}
+.log-row .st.run{color:var(--orange)}
+.log-row .st .pulse{width:5px;height:5px;background:currentColor}
+@media (max-width:520px){ .log-row{grid-template-columns:80px 1fr auto;gap:10px;padding-inline:14px} }
+
+/* marquee */
+.strip{padding-block:24px var(--section-gap);overflow:hidden}
+.strip .mono{color:var(--granite);text-align:center;margin-bottom:32px}
+.marquee{
+  display:flex;width:max-content;gap:56px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee-track{display:flex;gap:56px;flex:none}
+.marquee span{font-size:24px;letter-spacing:-.031em;color:var(--granite);white-space:nowrap}
+@media (prefers-reduced-motion: no-preference){
+  .marquee{animation:marquee 60s linear infinite}
+}
+@keyframes marquee{to{transform:translateX(calc(-50% - 28px))}}
+.strip-mask{overflow:hidden}
+
+/* ---------- seções ---------- */
+.section{padding-block:var(--section-gap);scroll-margin-top:64px}
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 56px;align-items:end;margin-bottom:56px}
+@media (max-width:860px){ .section-head{grid-template-columns:1fr} }
+.section-head h2{
+  font-weight:400;font-size:clamp(34px,4vw,44px);line-height:1.12;letter-spacing:-.025em;
+  margin:16px 0 0;color:var(--bone);text-wrap:balance;
+}
+.section-head p{margin:0;color:var(--granite);max-width:48ch}
+
+/* cards escuros */
+.card{border:1px solid var(--carbon);border-radius:var(--r-card);padding:24px;transition:border-color var(--t)}
+.card:hover{border-color:var(--stroke)}
+
+/* projetos */
+.cases{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media (max-width:900px){ .cases{grid-template-columns:1fr} }
+.case{display:flex;flex-direction:column}
+.case h3{font-weight:400;font-size:clamp(28px,3vw,36px);line-height:1.1;letter-spacing:-.031em;margin:24px 0 0;color:var(--bone)}
+.case-sub{margin:16px 0 0;color:var(--granite)}
+.route{
+  margin:24px 0 0;padding:12px 14px;border-radius:var(--r-sm);background:var(--carbon);
+  color:var(--stone);overflow-x:auto;white-space:nowrap;
+}
+.route b{font-weight:400;color:var(--bone)}
+.route i{font-style:normal;color:var(--graphite);margin-inline:6px}
+.points{margin:24px 0 0;padding:0;list-style:none;display:grid;gap:16px}
+.points li{font-size:14px;line-height:1.43;color:var(--granite);padding-left:16px;position:relative}
+.points li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:1px;background:var(--graphite)}
+.points b{font-weight:400;color:var(--bone)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
+.tags span{padding:6px 8px;border:1px solid var(--carbon);border-radius:var(--r-sm);color:var(--stone)}
+.case-links{display:flex;flex-direction:column;margin-top:auto;padding-top:32px}
+.case-links .ghost{justify-content:space-between}
+.case-links .ghost .sub{font-family:var(--mono);font-size:12px;letter-spacing:-.02em;color:var(--granite);margin-left:auto}
+
+/* atuação */
+.work{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:24px;align-items:start}
+@media (max-width:900px){ .work{grid-template-columns:1fr} }
+.prose p{margin:0 0 16px;color:var(--granite)}
+.prose p:last-child{margin-bottom:0}
+.prose strong{font-weight:400;color:var(--bone)}
+
+.light{
+  position:relative;background:var(--bone);color:var(--ink);border-radius:var(--r-card);padding:24px;overflow:hidden;
+}
+.light::after{content:"";position:absolute;inset:0;background:var(--grain);opacity:.07;pointer-events:none;mix-blend-mode:multiply}
+.light > *{position:relative;z-index:1}
+.light .eyebrow{color:var(--ink);margin:0}
+.light h3{font-weight:400;font-size:36px;line-height:1.1;letter-spacing:-.031em;margin:24px 0 0}
+.light p{color:#4d4947;margin:16px 0 0}
+.light strong{font-weight:500;color:var(--ink)}
+
+/* princípios */
+.rules{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+@media (max-width:1000px){ .rules{grid-template-columns:1fr 1fr} }
+@media (max-width:600px){ .rules{grid-template-columns:1fr} }
+.rule{display:flex;flex-direction:column;min-height:240px}
+.rule .mono{color:var(--granite)}
+.rule h3{font-weight:400;font-size:20px;line-height:1.2;letter-spacing:-.025em;margin:auto 0 0;padding-top:40px;color:var(--bone)}
+.rule p{margin:12px 0 0;font-size:14px;line-height:1.43;color:var(--granite)}
+
+/* stack */
+.table{border-top:1px solid var(--carbon)}
+.trow{display:grid;grid-template-columns:200px 1fr;gap:8px 24px;padding:16px 0;border-bottom:1px solid var(--carbon);align-items:baseline}
+@media (max-width:640px){ .trow{grid-template-columns:1fr} }
+.trow .mono{color:var(--stone)}
+.trow .vals{display:flex;flex-wrap:wrap;gap:6px 24px;color:var(--bone)}
+.trow.soon .vals{color:var(--granite)}
+.trow.soon .mono{display:inline-flex;align-items:center;gap:8px}
+
+/* contato */
+.cta-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,480px);gap:56px;align-items:end}
+@media (max-width:900px){ .cta-wrap{grid-template-columns:1fr} }
+.cta-wrap h2{font-weight:400;font-size:clamp(44px,5.6vw,72px);line-height:1;letter-spacing:-.04em;margin:0}
+.cta-actions{display:flex;flex-wrap:wrap;gap:16px;margin-top:32px;align-items:center}
+.cta-email{font-family:var(--mono);font-size:12px;letter-spacing:-.02em;color:#4d4947}
+.social{display:flex;gap:24px;margin-top:40px}
+
+/* rodapé */
+.foot{padding-block:96px 48px}
+.foot-cols{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+@media (max-width:760px){ .foot-cols{grid-template-columns:1fr 1fr} }
+.foot h4{margin:0 0 16px;font-weight:400;color:var(--bone)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foot li, .foot li a{font-size:14px;color:var(--granite);text-decoration:none;transition:color var(--t)}
+.foot li a:hover{color:var(--bone)}
+.foot-base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;margin-top:80px;color:var(--graphite)}
+/* ---------- atuação: linha do tempo ---------- */
+#atuacao{--muted:var(--stone)}
+#atuacao .section-head{display:block;max-width:760px}
+#atuacao .section-head p:not(.eyebrow){margin-top:24px}
+#atuacao .eyebrow{font-family:var(--mono);font-size:12px;line-height:1.2;letter-spacing:-.02em;text-transform:uppercase;color:var(--stone)}
+.journey{display:grid;gap:24px}
+.step{
+  position:relative;border:1px solid var(--carbon);border-radius:var(--r-card);padding:24px;
+  display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start;
+  transition:border-color var(--t);
+}
+.step:hover{border-color:var(--stroke)}
+.step + .step::before{content:"";position:absolute;left:36px;top:-25px;width:1px;height:24px;background:var(--stroke)}
+@media (max-width:880px){ .step{grid-template-columns:1fr} }
+.step-tag{display:flex;align-items:center;gap:12px}
+.step-num{
+  font-family:var(--mono);font-size:12px;line-height:1;letter-spacing:-.02em;text-transform:uppercase;
+  padding:6px 8px;border:1px solid var(--stroke);border-radius:var(--r-sm);color:var(--bone);
+}
+.step h3{font-weight:400;font-size:clamp(26px,3vw,36px);line-height:1.1;letter-spacing:-.031em;margin:24px 0 0;color:var(--bone)}
+.step p{margin:16px 0 0;color:var(--granite);max-width:60ch}
+.step p strong{font-weight:400;color:var(--bone)}
+.step .marks{border:1px solid var(--carbon);border-radius:var(--r-card);overflow:hidden}
+.step .mark{padding:20px;border-top:1px solid var(--carbon)}
+.step .mark:first-child{border-top:0}
+.step .mark .n{font-size:36px;line-height:1.1;letter-spacing:-.031em;color:var(--bone)}
+.step .mark .l{margin-top:8px;font-size:14px;line-height:1.43;color:var(--muted)}
+#atuacao .pill{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--r-sm);
+  font-family:var(--mono);font-size:12px;line-height:1;letter-spacing:-.02em;text-transform:uppercase;
+}
+#atuacao .chips{display:flex;flex-wrap:wrap;gap:6px}
+#atuacao .chip{
+  padding:6px 8px;border-radius:var(--r-sm);
+  font-family:var(--mono);font-size:12px;line-height:1.2;letter-spacing:-.02em;text-transform:uppercase;
+}
+.step-chips{margin:16px 0 0}
+/* etapa atual: card claro, a figura sobre o fundo escuro */
+.step-now{background:var(--bone);border-color:var(--bone);color:var(--ink);overflow:hidden}
+.step-now:hover{border-color:var(--bone)}
+.step-now::after{content:"";position:absolute;inset:0;border-radius:inherit;background:var(--grain);opacity:.07;pointer-events:none;mix-blend-mode:multiply}
+.step-now > *{position:relative;z-index:1}
+.step-now .step-num{border-color:var(--ink);color:var(--ink)}
+.step-now .eyebrow{color:var(--ink)!important}
+.step-now h3{color:var(--ink)}
+.step-now p{color:var(--graphite)}
+.step-now p strong{font-weight:500;color:var(--ink)}
+.step-now .pill{background:var(--ink);color:var(--bone)}
+.step-now .chip{border:1px solid #c9c4c1;color:var(--ink)}
+.step-now .marks-label{margin:32px 0 12px;font-family:var(--mono);font-size:12px;line-height:1.2;letter-spacing:-.02em;text-transform:uppercase;color:var(--ink)}
+.step-now .marks{border-color:#c9c4c1}
+.step-now .mark{border-top-color:#c9c4c1}
+.step-now .mark:first-child{border-top:0}
+.step-now .mark .n{color:var(--ink)}
+.step-now .mark .l{color:var(--graphite)}
+.step-now h3{font-size:clamp(30px,3.6vw,44px);letter-spacing:-.025em}
+
+/* ============ liquid glass ============ */
+:root{
+  --lg-tint:linear-gradient(135deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.035) 45%,rgba(255,255,255,.06) 100%);
+  --lg-edge:rgba(255,255,255,.12);
+  --lg-rim:inset 1px 1px 0 rgba(255,255,255,.28),inset -1px -1px 0 rgba(255,255,255,.07),inset 0 0 24px rgba(255,255,255,.035);
+  --lg-drop:0 24px 60px -24px rgba(0,0,0,.7);
+  --lg-blur:blur(28px) saturate(180%);
+  --lg-r:22px;
+}
+
+/* luzes de fundo, para o vidro ter o que refratar */
+.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.ambient i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.ambient i:nth-child(1){width:46vmax;height:46vmax;left:-12vmax;top:-10vmax;background:radial-gradient(circle,rgba(238,96,24,.55),transparent 65%)}
+.ambient i:nth-child(2){width:40vmax;height:40vmax;right:-10vmax;top:18vh;background:radial-gradient(circle,rgba(160,202,146,.42),transparent 65%)}
+.ambient i:nth-child(3){width:50vmax;height:50vmax;left:22vw;bottom:-22vmax;background:radial-gradient(circle,rgba(86,120,255,.40),transparent 65%)}
+@media (prefers-reduced-motion: no-preference){
+  .ambient i:nth-child(1){animation:float1 40s ease-in-out infinite alternate}
+  .ambient i:nth-child(2){animation:float2 46s ease-in-out infinite alternate}
+  .ambient i:nth-child(3){animation:float3 52s ease-in-out infinite alternate}
+}
+@keyframes float1{to{transform:translate3d(10vmax,8vmax,0) scale(1.1)}}
+@keyframes float2{to{transform:translate3d(-8vmax,10vmax,0) scale(.92)}}
+@keyframes float3{to{transform:translate3d(-10vmax,-6vmax,0) scale(1.08)}}
+
+/* superfície de vidro escuro */
+.dash,.card,.step,.nav-in,.btn-dark,.route,.tags span,#atuacao .chip,.step-num,.dash-bar{
+  -webkit-backdrop-filter:var(--lg-blur);backdrop-filter:var(--lg-blur);
+}
+.dash,.card,.step{
+  background:
+    radial-gradient(420px circle at var(--mx,20%) var(--my,0%),rgba(255,255,255,.09),transparent 60%),
+    var(--lg-tint);
+  border:1px solid var(--lg-edge);
+  border-radius:var(--lg-r);
+  box-shadow:var(--lg-rim),var(--lg-drop);
+  transition:border-color var(--t),box-shadow var(--t),transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.card:hover,.step:hover{border-color:rgba(255,255,255,.22);transform:translateY(-2px)}
+.dash{background-color:rgba(16,16,16,.35)}
+.dash-bar{background:rgba(255,255,255,.04);border-bottom-color:rgba(255,255,255,.08)}
+.tile,.log-row{border-color:rgba(255,255,255,.07)}
+.lights i:nth-child(1){background:#ff5f57}.lights i:nth-child(2){background:#febc2e}.lights i:nth-child(3){background:#28c840}
+
+/* nav em cápsula flutuante */
+.nav{top:0;background:transparent;border-bottom:0;padding-top:12px}
+.nav-in{
+  width:calc(100% - 2 * var(--gutter));max-width:calc(var(--max) - 2 * var(--gutter));
+  height:56px;padding:0 8px 0 22px;border-radius:999px;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+  border:1px solid var(--lg-edge);box-shadow:var(--lg-rim),0 12px 40px -12px rgba(0,0,0,.6);
+}
+.nav .btn{height:40px}
+
+/* botões em pílula */
+.btn{border-radius:999px;padding:0 18px}
+.btn-dark{
+  background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.16);box-shadow:var(--lg-rim);
+}
+.btn-dark:hover{background:linear-gradient(135deg,rgba(255,255,255,.24),rgba(255,255,255,.08))}
+.btn-light{
+  background:linear-gradient(180deg,#ffffff,rgba(255,255,255,.82));
+  box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 rgba(0,0,0,.08),0 6px 20px -8px rgba(255,255,255,.35);
+}
+.btn-ink{box-shadow:inset 0 1px 0 rgba(255,255,255,.18);background:linear-gradient(180deg,#2a2827,#101010)}
+
+/* peças pequenas */
+.route,.tags span,#atuacao .chip,.step-num{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:999px;
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.12);
+}
+.route{border-radius:14px}
+.step .marks,.step .mark{border-color:rgba(255,255,255,.08)}
+.step .marks{border-radius:16px;background:rgba(0,0,0,.18)}
+.step + .step::before{background:rgba(255,255,255,.18)}
+
+/* vidro claro: a figura sobre o fundo */
+.light,.step-now{
+  background:
+    radial-gradient(420px circle at var(--mx,20%) var(--my,0%),rgba(255,255,255,.55),transparent 60%),
+    linear-gradient(135deg,rgba(255,255,255,.90),rgba(238,238,238,.72));
+  -webkit-backdrop-filter:blur(30px) saturate(160%);backdrop-filter:blur(30px) saturate(160%);
+  border:1px solid rgba(255,255,255,.7);border-radius:var(--lg-r);
+  box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 rgba(0,0,0,.06),0 30px 70px -28px rgba(0,0,0,.75);
+}
+.step-now:hover{border-color:rgba(255,255,255,.9)}
+.step-now .chip,.step-now .step-num{background:rgba(255,255,255,.55);border-color:rgba(0,0,0,.12);box-shadow:inset 1px 1px 0 #fff}
+.step-now .pill{border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.step-now .marks{background:rgba(255,255,255,.4);border-color:rgba(0,0,0,.1)}
+.step-now .mark{border-top-color:rgba(0,0,0,.08)}
+
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .dash,.card,.step,.nav-in{background:rgba(28,27,26,.94)}
+  .light,.step-now{background:#eeeeee}
+}
+@media (prefers-reduced-motion: reduce){
+  .card:hover,.step:hover{transform:none}
 }
 </style>
 </head>
 <body>
 
-<div class="aurora" aria-hidden="true">
-  <span class="a1"></span><span class="a2"></span><span class="a3"></span><span class="a4"></span>
-</div>
-<div class="grain" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true"><i></i><i></i><i></i></div>
 
-<nav class="nav">
-  <div class="nav-in glass">
-    <a class="nav-brand" href="#top">Dálisson<i>.</i></a>
-    <a class="nav-link" href="#projetos">projetos</a>
-    <a class="nav-link" href="#atuacao">atuação</a>
-    <a class="nav-link" href="#stack">stack</a>
-    <a class="nav-link" href="#contato">contato</a>
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="wordmark mono" href="#top">Dálisson Silva</a>
+    <a class="nav-link" href="#projetos">Projetos</a>
+    <a class="nav-link" href="#atuacao">Atuação</a>
+    <a class="nav-link" href="#stack">Stack</a>
+    <a class="btn btn-light" href="#contato">Contato</a>
   </div>
-</nav>
+</header>
 
 <main id="top">
 
   <!-- HERO -->
-  <section class="hero wrap">
-    <div class="hero-top">
-      <p class="eyebrow">Engenharia de dados · full cycle</p>
-      <h1>Do banco de origem até o painel que <em>alguém decide olhar.</em></h1>
-    </div>
-    <p class="hero-lead">
-      Sou Dálisson Silva. Construo e opero pipelines de ponta a ponta — ingestão,
-      arquitetura em camadas, governança e o painel na frente de quem decide.
-      Hoje em saúde suplementar, com um data lake em produção.
-    </p>
-
-    <div class="console glass rv">
-      <div class="console-head">
-        <span class="dots"><i></i><i></i><i></i></span>
-        <span class="console-title">pipeline · fluxo padrão</span>
+  <section class="wrap hero">
+    <div class="hero-head">
+      <div>
+        <p class="mono eyebrow"><span class="pulse"></span>Engenharia de dados · full cycle</p>
+        <h1>Data warehouse, lakehouse e governança de dados em saúde suplementar.</h1>
       </div>
-      <div class="stages">
-        <div class="stage"><b></b><span class="k">origem</span><span class="v">API · banco</span></div>
-        <div class="stage s-b"><b></b><span class="k">bronze</span><span class="v">cópia fiel</span></div>
-        <div class="stage s-s"><b></b><span class="k">silver</span><span class="v">validado</span></div>
-        <div class="stage s-g"><b></b><span class="k">gold</span><span class="v">pronto</span></div>
-        <div class="stage"><b></b><span class="k">decisão</span><span class="v">painel · IA</span></div>
+      <div>
+        <p class="hero-lead">
+          Sou Dálisson Silva. Construo e opero pipelines de ponta a ponta — ingestão,
+          arquitetura em camadas, governança e o painel na frente de quem decide.
+          Hoje em saúde suplementar, com um data lake em produção.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-dark" href="#projetos">Ver projetos</a>
+          <a class="ghost" href="#contato">Aberto a novos projetos <span class="ar" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
 
-    <div class="hero-sign">
-      <span class="pill glass"><span class="pulse"></span>Aberto a conversas sobre novos projetos</span>
-      <span class="hero-name">Dálisson Silva · 2026</span>
+    <div class="dash" role="img" aria-label="Painel com os resultados em produção e o fluxo padrão do pipeline">
+      <div class="dash-bar mono">
+        <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="title">dados · saúde suplementar</span>
+        <span class="live"><span class="pulse"></span>produção</span>
+      </div>
+      <div class="tiles">
+        <div class="tile">
+          <div class="mono">Painéis</div>
+          <div class="val">150+</div>
+          <div class="cap">inventariados e governados</div>
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 34 L12 31 L24 32 L36 26 L48 24 L60 19 L72 17 L84 11 L100 6" stroke="#a0ca92"/></svg>
+        </div>
+        <div class="tile">
+          <div class="mono">Conexões diretas</div>
+          <div class="val">−70%</div>
+          <div class="cap">ao banco de produção</div>
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 6 L14 8 L26 12 L38 14 L50 21 L62 25 L76 30 L88 32 L100 33" stroke="#ee6018"/></svg>
+        </div>
+        <div class="tile">
+          <div class="mono">Recarga</div>
+          <div class="val">−50%</div>
+          <div class="cap">no tempo dos painéis</div>
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 8 L12 10 L24 9 L36 15 L48 18 L60 22 L72 24 L86 26 L100 27" stroke="#ee6018"/></svg>
+        </div>
+        <div class="tile">
+          <div class="mono">Indisponibilidade</div>
+          <div class="val">0</div>
+          <div class="cap">janelas na migração do DW</div>
+          <svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 20 L100 20" stroke="#a0ca92"/></svg>
+        </div>
+      </div>
+      <div class="log">
+        <div class="log-row head"><span>camada</span><span>função</span><span>estado</span></div>
+        <div class="log-row"><span class="stg">origem</span><span>API · banco transacional</span><span class="st ok"><span class="pulse"></span>ok</span></div>
+        <div class="log-row"><span class="stg">bronze</span><span>cópia fiel da origem</span><span class="st ok"><span class="pulse"></span>ok</span></div>
+        <div class="log-row"><span class="stg">silver</span><span>validado e padronizado</span><span class="st ok"><span class="pulse"></span>ok</span></div>
+        <div class="log-row"><span class="stg">gold</span><span>pronto para consumo</span><span class="st ok"><span class="pulse"></span>ok</span></div>
+        <div class="log-row"><span class="stg">decisão</span><span>painel · IA</span><span class="st ok"><span class="pulse"></span>ok</span></div>
+        <div class="log-row"><span class="stg">databricks</span><span>implantação ponta a ponta</span><span class="st run"><span class="pulse"></span>em curso</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK STRIP -->
+  <section class="strip" aria-label="Ferramentas com que trabalho">
+    <p class="mono">Ferramentas em produção e em projetos abertos</p>
+    <div class="strip-mask">
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track"><span>Python</span><span>SQL</span><span>Apache Airflow</span><span>Databricks</span><span>Delta Lake</span><span>Unity Catalog</span><span>Snowflake</span><span>PostgreSQL</span><span>OCI</span><span>Qlik Cloud</span><span>Streamlit</span><span>Docker</span></div>
+        <div class="marquee-track"><span>Python</span><span>SQL</span><span>Apache Airflow</span><span>Databricks</span><span>Delta Lake</span><span>Unity Catalog</span><span>Snowflake</span><span>PostgreSQL</span><span>OCI</span><span>Qlik Cloud</span><span>Streamlit</span><span>Docker</span></div>
+      </div>
     </div>
   </section>
 
   <!-- PROJETOS -->
   <section class="section wrap" id="projetos">
-    <div class="section-head rv">
-      <p class="eyebrow">Projetos abertos</p>
-      <h2>Dois pipelines completos, com código e dados públicos</h2>
+    <div class="section-head">
+      <div>
+        <p class="mono eyebrow">Projetos abertos</p>
+        <h2>Dois pipelines completos, com código e dados públicos.</h2>
+      </div>
       <p>Não são exercícios de tutorial: ingerem dados reais, rodam sozinhos e têm governança, documentação e observabilidade.</p>
     </div>
 
     <div class="cases">
-
-      <article class="case glass rv">
-        <div>
-          <p class="eyebrow">Lakehouse · Databricks</p>
-          <h3>Blockwatch — mercado de Bitcoin em tempo quase real</h3>
-          <p class="case-sub">Candles diários de BTC/USDT saindo da Binance e chegando num painel com IA generativa, passando por três camadas de tratamento no caminho.</p>
-          <ul class="points">
-            <li><b>Ingestão orquestrada:</b> Airflow self-hosted em Docker, com git-sync — todo push no repositório é detectado sozinho, sem deploy manual.</li>
-            <li><b>Atualização por evento:</b> silver e gold disparam quando a bronze recebe dados novos, não em horário fixo torcendo para o dado já estar lá.</li>
-            <li><b>Observabilidade:</b> um painel próprio acompanha volume processado e duração de cada carga, lendo o histórico nativo do Delta.</li>
-            <li><b>Documentação viva:</b> o glossário de indicadores é uma tabela na gold — documentar no Databricks já reflete no dashboard.</li>
-          </ul>
+      <article class="case card">
+        <p class="mono eyebrow"><span class="pulse ok"></span>Lakehouse · Databricks</p>
+        <h3>Blockwatch — mercado de Bitcoin em tempo quase real</h3>
+        <p class="case-sub">Candles diários de BTC/USDT saindo da Binance e chegando num painel com IA generativa, passando por três camadas de tratamento no caminho.</p>
+        <p class="route mono"><b>Binance</b><i>→</i><b>Airflow</b><i>→</i>bronze<i>→</i>silver<i>→</i>gold<i>→</i><b>Qlik Cloud</b></p>
+        <ul class="points">
+          <li><b>Ingestão orquestrada:</b> Airflow self-hosted em Docker, com git-sync — todo push no repositório é detectado sozinho, sem deploy manual.</li>
+          <li><b>Atualização por evento:</b> silver e gold disparam quando a bronze recebe dados novos, não em horário fixo torcendo para o dado já estar lá.</li>
+          <li><b>Observabilidade:</b> um painel próprio acompanha volume processado e duração de cada carga, lendo o histórico nativo do Delta.</li>
+          <li><b>Documentação viva:</b> o glossário de indicadores é uma tabela na gold — documentar no Databricks já reflete no dashboard.</li>
+        </ul>
+        <div class="tags mono"><span>Python</span><span>Airflow</span><span>Docker</span><span>Databricks</span><span>Delta Lake</span><span>Unity Catalog</span><span>Qlik Cloud</span></div>
+        <div class="case-links">
+          <a class="ghost" href="https://github.com/DalissonSilva/lakehouse-bitcoin" target="_blank" rel="noopener">Ver o repositório <span class="sub">lakehouse-bitcoin</span><span class="ar" aria-hidden="true">↗</span></a>
         </div>
-        <aside class="side">
-          <div class="side-label">Fluxo</div>
-          <div class="flow">
-            <div class="flow-line"><span>Binance</span><i>→</i><span>Airflow</span></div>
-            <div class="flow-line">
-              <span class="m m-b">bronze</span><i>→</i><span class="m m-s">silver</span><i>→</i>
-              <span class="m m-g">gold</span><i>→</i><span>Qlik Cloud</span>
-            </div>
-          </div>
-          <div class="side-label">Stack</div>
-          <div class="chips">
-            <span class="chip">Python</span><span class="chip">Airflow</span><span class="chip">Docker</span>
-            <span class="chip">Databricks</span><span class="chip">Delta Lake</span>
-            <span class="chip">Unity Catalog</span><span class="chip">Qlik Cloud</span>
-          </div>
-          <div class="actions">
-            <a class="btn key" href="https://github.com/DalissonSilva/lakehouse-bitcoin" target="_blank" rel="noopener">
-              <span><span class="t">Ver o repositório</span><span class="u">DalissonSilva/lakehouse-bitcoin</span></span>
-              <span class="ar" aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </aside>
       </article>
 
-      <article class="case glass rv">
-        <div>
-          <p class="eyebrow">Data Lake · OCI + Snowflake</p>
-          <h3>Beneficiários de saúde suplementar em Alagoas</h3>
-          <p class="case-sub">85 competências de dados abertos da ANS — de abril/2019 a abril/2026 — transformadas num dashboard público que qualquer pessoa pode abrir.</p>
-          <ul class="points">
-            <li><b>Infraestrutura de verdade:</b> a ingestão roda dentro de uma VM Compute da OCI, autenticada por Instance Principal — nenhuma chave de API no código.</li>
-            <li><b>Governança auditável:</b> cada carga é registrada num Autonomous Database com status, volume e janela de execução.</li>
-            <li><b>Indicadores com dono:</b> catálogo no padrão DAMA-DMBOK — regra de cálculo, nível e responsável, publicados dentro do próprio painel.</li>
-            <li><b>Entrega sem dependência:</b> a camada gold é exportada em Parquet público, então o dashboard roda sem conexão com o data warehouse.</li>
-          </ul>
+      <article class="case card">
+        <p class="mono eyebrow"><span class="pulse ok"></span>Data Lake · OCI + Snowflake</p>
+        <h3>Beneficiários de saúde suplementar em Alagoas</h3>
+        <p class="case-sub">85 competências de dados abertos da ANS — de abril/2019 a abril/2026 — transformadas num dashboard público que qualquer pessoa pode abrir.</p>
+        <p class="route mono"><b>ANS</b><i>→</i><b>VM OCI</b><i>→</i>bronze<i>→</i>silver<i>→</i>gold<i>→</i><b>Streamlit</b></p>
+        <ul class="points">
+          <li><b>Infraestrutura de verdade:</b> a ingestão roda dentro de uma VM Compute da OCI, autenticada por Instance Principal — nenhuma chave de API no código.</li>
+          <li><b>Governança auditável:</b> cada carga é registrada num Autonomous Database com status, volume e janela de execução.</li>
+          <li><b>Indicadores com dono:</b> catálogo no padrão DAMA-DMBOK — regra de cálculo, nível e responsável, publicados dentro do próprio painel.</li>
+          <li><b>Entrega sem dependência:</b> a camada gold é exportada em Parquet público, então o dashboard roda sem conexão com o data warehouse.</li>
+        </ul>
+        <div class="tags mono"><span>Python</span><span>OCI Compute</span><span>Object Storage</span><span>Autonomous DB</span><span>Snowflake</span><span>Streamlit</span></div>
+        <div class="case-links">
+          <a class="ghost" href="https://dashboard-ans-al.streamlit.app" target="_blank" rel="noopener">Abrir o dashboard ao vivo <span class="sub">streamlit.app</span><span class="ar" aria-hidden="true">↗</span></a>
+          <a class="ghost" href="https://github.com/DalissonSilva/datalake-dashboard-ans" target="_blank" rel="noopener">Ver o repositório <span class="sub">datalake-dashboard-ans</span><span class="ar" aria-hidden="true">↗</span></a>
         </div>
-        <aside class="side">
-          <div class="side-label">Fluxo</div>
-          <div class="flow">
-            <div class="flow-line"><span>ANS</span><i>→</i><span>VM OCI</span></div>
-            <div class="flow-line">
-              <span class="m m-b">bronze</span><i>→</i><span class="m m-s">silver</span><i>→</i>
-              <span class="m m-g">gold</span><i>→</i><span>Streamlit</span>
-            </div>
-          </div>
-          <div class="side-label">Stack</div>
-          <div class="chips">
-            <span class="chip">Python</span><span class="chip">OCI Compute</span>
-            <span class="chip">Object Storage</span><span class="chip">Autonomous DB</span>
-            <span class="chip">Snowflake</span><span class="chip">Streamlit</span>
-          </div>
-          <div class="actions">
-            <a class="btn key" href="https://dashboard-ans-al.streamlit.app" target="_blank" rel="noopener">
-              <span><span class="t">Abrir o dashboard ao vivo</span><span class="u">dashboard-ans-al.streamlit.app</span></span>
-              <span class="ar" aria-hidden="true">↗</span>
-            </a>
-            <a class="btn" href="https://github.com/DalissonSilva/datalake-dashboard-ans" target="_blank" rel="noopener">
-              <span><span class="t">Ver o repositório</span><span class="u">DalissonSilva/datalake-dashboard-ans</span></span>
-              <span class="ar" aria-hidden="true">↗</span>
-            </a>
-          </div>
-        </aside>
       </article>
-
     </div>
   </section>
 
   <!-- ATUAÇÃO -->
   <section class="section wrap" id="atuacao">
     <div class="section-head rv">
-      <p class="eyebrow">Atuação profissional</p>
+      <p class="eyebrow">Atuação profissional · Saúde suplementar</p>
       <h2>O que faço quando o pipeline é de produção</h2>
+      <p>Da migração de sistemas legados para o Tasy até um lakehouse em Databricks — mantendo os indicadores estratégicos da operadora e da rede própria no ar durante cada mudança.</p>
     </div>
 
-    <div class="grid-2">
-      <div class="panel glass rv">
-        <div class="panel-tag">Saúde suplementar</div>
-        <p>Cheguei numa área de dados sem arquitetura formal: fluxos paralelos sem governança, painéis conectados direto no banco transacional e nenhum responsável definido por domínio. Reestruturei em torno de uma <strong>arquitetura medalhão sobre PostgreSQL</strong>, orquestrada por Airflow com SLA e alertas, com camada gold entregue em Parquet — um arquivo por painel, sem join em tempo de consulta.</p>
-        <p>Também conduzi a <strong>migração do data warehouse</strong> de um ERP hospitalar legado para o sistema que o substituiu: remapeamento de fontes e regras, validação cruzada contra o histórico e cutover coordenado com as áreas — sem janela de indisponibilidade percebida pelo negócio.</p>
-        <p>Em andamento: estou <strong>implantando o Databricks na empresa</strong>, de ponta a ponta e <strong>sem Airflow</strong>. Todas as camadas rodam no Databricks — da integração do ERP até a bronze e, dali, prata e ouro em <strong>Delta Lake com Unity Catalog</strong>, orquestradas por Databricks Jobs. Junto com a implantação, faço a <strong>revisão de todo o processo</strong>: fontes, regras de transformação, governança e monitoramento.</p>
-      </div>
-      <div class="marks rv">
-        <div class="mark glass"><div class="n">150+</div><div class="l">painéis inventariados e governados</div></div>
-        <div class="mark glass"><div class="n">70%</div><div class="l">das conexões diretas ao banco de produção eliminadas</div></div>
-        <div class="mark glass"><div class="n">50%</div><div class="l">de redução no tempo de recarga dos painéis</div></div>
-        <div class="mark glass"><div class="n">0</div><div class="l">janelas de indisponibilidade na migração do DW</div></div>
-      </div>
+    <div class="journey">
+
+      <article class="step glass rv">
+        <div>
+          <div class="step-tag"><span class="step-num">01</span><span class="eyebrow">Operadora · Migração do DW</span></div>
+          <h3>Virada do ERP para o Tasy</h3>
+          <p>Conduzi a <strong>migração do data warehouse</strong> na implantação do Tasy na operadora, consolidando três sistemas legados — SABIUS, SMART e Pirâmide. Remapeamento de fontes e regras com todos os de-paras, validação cruzada contra o histórico e cutover coordenado com as áreas.</p>
+          <p>Os <strong>indicadores estratégicos</strong> de receita, despesa, contas médicas, regulação e gestão de rede seguiram disponíveis para as diretorias, e estruturei o acompanhamento pós-virada para medir a qualidade da implantação.</p>
+        </div>
+        <div class="marks">
+          <div class="mark glass"><div class="n">3 → 1</div><div class="l">sistemas legados consolidados no Tasy</div></div>
+          <div class="mark glass"><div class="n">100%</div><div class="l">dos indicadores estratégicos mantidos na virada, sem indisponibilidade percebida</div></div>
+        </div>
+      </article>
+
+      <article class="step glass rv">
+        <div>
+          <div class="step-tag"><span class="step-num">02</span><span class="eyebrow">Rede própria · Data marts</span></div>
+          <h3>Expansão para os serviços próprios</h3>
+          <p>Repliquei o método na implantação do Tasy nos <strong>serviços próprios</strong>: hospitais, laboratórios, terapias especiais e fisioterapia, cada um com regras de negócio próprias, migrados para data marts no DW.</p>
+          <p>Resultado: uma <strong>visão unificada entre operadora e rede própria</strong>, na mesma base e com as mesmas regras.</p>
+        </div>
+        <div class="marks">
+          <div class="mark glass"><div class="n">4 frentes</div><div class="l">hospitais, laboratórios, terapias especiais e fisioterapia integrados ao DW</div></div>
+          <div class="mark glass"><div class="n">1 visão</div><div class="l">operadora e rede própria no mesmo data warehouse</div></div>
+        </div>
+      </article>
+
+      <article class="step step-now glass rv">
+        <div>
+          <div class="step-tag"><span class="step-num">03</span><span class="eyebrow">Lakehouse · Databricks</span></div>
+          <h3>Implantação do Databricks de ponta a ponta</h3>
+          <p>Todas as camadas rodam no Databricks — da integração do ERP até a bronze e, dali, prata e ouro em <strong>Delta Lake com Unity Catalog</strong>, orquestradas por <strong>Databricks Jobs</strong>, concentrando processamento, orquestração e governança numa única plataforma, sem Airflow.</p>
+          <p>A base veio da <strong>reestruturação da área de dados</strong>: encontrei fluxos paralelos sem governança, painéis conectados direto no banco transacional e nenhum responsável definido por domínio, e reorganizei tudo em uma <strong>arquitetura medalhão sobre PostgreSQL</strong>, orquestrada por Airflow com SLA e alertas, com a camada gold entregue em Parquet, um arquivo por painel.</p>
+          <p>Junto com a implantação, faço a <strong>revisão de todo o processo</strong>: fontes, regras de transformação, governança e monitoramento.</p>
+        </div>
+        <div>
+          <span class="pill glass"><span class="pulse"></span>Em andamento · 2026</span>
+          <div class="chips step-chips">
+            <span class="chip">Databricks</span><span class="chip">Delta Lake</span>
+            <span class="chip">Unity Catalog</span><span class="chip">Databricks Jobs</span>
+          </div>
+          <p class="marks-label">Resultados da reestruturação</p>
+          <div class="marks">
+            <div class="mark glass"><div class="n">150+</div><div class="l">painéis inventariados e governados</div></div>
+            <div class="mark glass"><div class="n">70%</div><div class="l">das conexões diretas ao banco de produção eliminadas</div></div>
+            <div class="mark glass"><div class="n">50%</div><div class="l">de redução no tempo de recarga dos painéis</div></div>
+          </div>
+        </div>
+      </article>
+
     </div>
   </section>
 
   <!-- PRINCÍPIOS -->
   <section class="section wrap">
-    <div class="section-head rv">
-      <p class="eyebrow">Como trabalho</p>
-      <h2>Quatro coisas em que não abro mão</h2>
+    <div class="section-head">
+      <div>
+        <p class="mono eyebrow">Como trabalho</p>
+        <h2>Quatro coisas em que não abro mão.</h2>
+      </div>
     </div>
-    <div class="rules rv">
-      <div class="rule glass"><h3>A pergunta vem antes da tabela</h3><p>Modelo a camada gold a partir da decisão que ela precisa sustentar. Tabela que não responde nada vira custo de manutenção.</p></div>
-      <div class="rule glass"><h3>Dado sem dono é dado sem valor</h3><p>Cada domínio tem responsável formal, regra de cálculo documentada e histórico de alteração versionado.</p></div>
-      <div class="rule glass"><h3>O painel não conversa com produção</h3><p>Só a camada de ingestão toca o banco transacional. O consumo lê material já tratado, isolado e previsível.</p></div>
-      <div class="rule glass"><h3>Se quebrar, eu fico sabendo antes</h3><p>Regras de qualidade barram o dado ruim na entrada, e a execução de cada carga fica registrada e consultável.</p></div>
+    <div class="rules">
+      <div class="rule card"><span class="mono">01</span><h3>A pergunta vem antes da tabela</h3><p>Modelo a camada gold a partir da decisão que ela precisa sustentar. Tabela que não responde nada vira custo de manutenção.</p></div>
+      <div class="rule card"><span class="mono">02</span><h3>Dado sem dono é dado sem valor</h3><p>Cada domínio tem responsável formal, regra de cálculo documentada e histórico de alteração versionado.</p></div>
+      <div class="rule card"><span class="mono">03</span><h3>O painel não conversa com produção</h3><p>Só a camada de ingestão toca o banco transacional. O consumo lê material já tratado, isolado e previsível.</p></div>
+      <div class="rule card"><span class="mono">04</span><h3>Se quebrar, eu fico sabendo antes</h3><p>Regras de qualidade barram o dado ruim na entrada, e a execução de cada carga fica registrada e consultável.</p></div>
     </div>
   </section>
 
   <!-- STACK -->
   <section class="section wrap" id="stack">
-    <div class="section-head rv">
-      <p class="eyebrow">Ferramentas</p>
-      <h2>Stack</h2>
+    <div class="section-head">
+      <div>
+        <p class="mono eyebrow">Ferramentas</p>
+        <h2>Stack.</h2>
+      </div>
     </div>
-    <div class="stack glass rv">
-      <div class="srow"><div class="sk">linguagens</div><div class="sv"><span>Python</span><span>SQL</span><span>Bash</span></div></div>
-      <div class="srow"><div class="sk">orquestração</div><div class="sv"><span>Apache Airflow</span><span>Databricks Jobs</span><span>cron</span></div></div>
-      <div class="srow"><div class="sk">armazenamento</div><div class="sv"><span>PostgreSQL</span><span>Delta Lake</span><span>Snowflake</span><span>Parquet</span><span>OCI Object Storage</span></div></div>
-      <div class="srow"><div class="sk">governança</div><div class="sv"><span>Unity Catalog</span><span>DAMA-DMBOK</span><span>dicionário de dados</span></div></div>
-      <div class="srow"><div class="sk">analytics</div><div class="sv"><span>Qlik Cloud</span><span>Streamlit</span><span>BI corporativo</span></div></div>
-      <div class="srow"><div class="sk">infra &amp; devops</div><div class="sv"><span>Docker</span><span>WSL2 / Ubuntu</span><span>Git</span><span>uv</span><span>OCI Compute</span></div></div>
-      <div class="srow"><div class="sk">próximo</div><div class="sv"><span class="soon">PySpark</span><span class="soon">Data Mesh</span><span class="soon">MLflow</span><span class="soon">streaming</span></div></div>
+    <div class="table">
+      <div class="trow"><span class="mono">Linguagens</span><div class="vals"><span>Python</span><span>SQL</span><span>Bash</span></div></div>
+      <div class="trow"><span class="mono">Orquestração</span><div class="vals"><span>Apache Airflow</span><span>Databricks Jobs</span><span>cron</span></div></div>
+      <div class="trow"><span class="mono">Armazenamento</span><div class="vals"><span>PostgreSQL</span><span>Delta Lake</span><span>Snowflake</span><span>Parquet</span><span>OCI Object Storage</span></div></div>
+      <div class="trow"><span class="mono">Governança</span><div class="vals"><span>Unity Catalog</span><span>DAMA-DMBOK</span><span>dicionário de dados</span></div></div>
+      <div class="trow"><span class="mono">Analytics</span><div class="vals"><span>Qlik Cloud</span><span>Streamlit</span><span>BI corporativo</span></div></div>
+      <div class="trow"><span class="mono">Infra &amp; DevOps</span><div class="vals"><span>Docker</span><span>WSL2 / Ubuntu</span><span>Git</span><span>uv</span><span>OCI Compute</span></div></div>
+      <div class="trow soon"><span class="mono"><span class="pulse"></span>Próximo</span><div class="vals"><span>PySpark</span><span>Data Mesh</span><span>MLflow</span><span>streaming</span></div></div>
     </div>
   </section>
 
   <!-- CONTATO -->
-  <section class="section wrap closing" id="contato">
-    <div class="rv">
-      <span class="tagline glass">Se chegou até aqui</span>
-      <h2>Vamos conversar</h2>
-      <p>Disponível para conversas sobre arquitetura de dados, governança e pipelines de ponta a ponta. Respondo mais rápido por e-mail.</p>
-      <div class="cta">
-        <a class="btn key" href="mailto:dalissonmuniz@outlook.com">
-          <span><span class="t">Enviar um e-mail</span><span class="u">dalissonmuniz@outlook.com</span></span>
-          <span class="ar" aria-hidden="true">→</span>
-        </a>
-        <a class="btn glass" href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" rel="noopener">
-          <span><span class="t">LinkedIn</span><span class="u">/in/dalisson-silva</span></span>
-          <span class="ar" aria-hidden="true">↗</span>
-        </a>
-        <a class="btn glass" href="https://github.com/DalissonSilva" target="_blank" rel="noopener">
-          <span><span class="t">GitHub</span><span class="u">github.com/DalissonSilva</span></span>
-          <span class="ar" aria-hidden="true">↗</span>
-        </a>
+  <section class="section wrap" id="contato">
+    <div class="cta-wrap">
+      <div>
+        <p class="mono eyebrow">Se chegou até aqui</p>
+        <h2 style="margin-top:24px">Vamos conversar.</h2>
+        <div class="social">
+          <a class="ghost" href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" rel="noopener">LinkedIn <span class="ar" aria-hidden="true">↗</span></a>
+          <a class="ghost" href="https://github.com/DalissonSilva" target="_blank" rel="noopener">GitHub <span class="ar" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="light">
+        <p class="mono eyebrow"><span class="pulse"></span>Disponível</p>
+        <h3>Arquitetura de dados, governança e pipelines de ponta a ponta.</h3>
+        <p>Respondo mais rápido por e-mail.</p>
+        <div class="cta-actions">
+          <a class="btn btn-ink" href="mailto:dalissonmuniz@outlook.com">Enviar um e-mail <span aria-hidden="true">→</span></a>
+          <span class="cta-email">dalissonmuniz@outlook.com</span>
+        </div>
       </div>
     </div>
   </section>
 
   <footer class="wrap foot">
-    <span>Dálisson Silva · engenharia de dados</span>
-    <span>origem → bronze → silver → gold → decisão</span>
+    <div class="foot-cols">
+      <div>
+        <h4 class="mono">Dálisson Silva</h4>
+        <ul><li>Engenharia de dados full cycle</li></ul>
+      </div>
+      <div>
+        <h4 class="mono">Página</h4>
+        <ul><li><a href="#projetos">Projetos</a></li><li><a href="#atuacao">Atuação</a></li><li><a href="#stack">Stack</a></li></ul>
+      </div>
+      <div>
+        <h4 class="mono">Projetos</h4>
+        <ul><li><a href="https://github.com/DalissonSilva/lakehouse-bitcoin" target="_blank" rel="noopener">Blockwatch</a></li><li><a href="https://dashboard-ans-al.streamlit.app" target="_blank" rel="noopener">Dashboard ANS</a></li></ul>
+      </div>
+      <div>
+        <h4 class="mono">Contato</h4>
+        <ul><li><a href="mailto:dalissonmuniz@outlook.com">E-mail</a></li><li><a href="https://www.linkedin.com/in/dalisson-silva-a01a591a7/" target="_blank" rel="noopener">LinkedIn</a></li><li><a href="https://github.com/DalissonSilva" target="_blank" rel="noopener">GitHub</a></li></ul>
+      </div>
+    </div>
+    <div class="foot-base mono">
+      <span>© 2026 Dálisson Silva</span>
+      <span>origem → bronze → silver → gold → decisão</span>
+    </div>
   </footer>
 
 </main>
 
 <script>
+/* brilho especular que acompanha o ponteiro sobre o vidro */
 (function(){
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var items = document.querySelectorAll('.rv');
-  if (reduce || !('IntersectionObserver' in window)){
-    items.forEach(function(el){ el.classList.add('in'); });
-    return;
-  }
-  var io = new IntersectionObserver(function(es){
-    es.forEach(function(e){
-      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  if (!window.matchMedia('(hover:hover)').matches) return;
+  document.querySelectorAll('.dash,.card,.step,.light').forEach(function(el){
+    el.addEventListener('pointermove', function(e){
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
     });
-  }, {rootMargin:'0px 0px -70px 0px', threshold:.05});
-  items.forEach(function(el){ io.observe(el); });
+  });
 })();
 </script>
 
